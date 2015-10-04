@@ -1,0 +1,3 @@
+---
+
+- include: "{{ jenkins_role|default('master') }}.yml"

@@ -1,0 +1,37 @@
+---
+
+- name: Install jenkins prerequisite packages
+  apt: name={{ item }} state=present
+  with_items: "{{ jenkins_prereq_pkgs|union(jenkins_apt_pkgs_extra) }}"
+
+- name: Install extra pip packages desired
+  pip: name={{ item }} state=present
+  with_items: "{{ jenkins_pip_pkgs_extra }}"
+
+- name: Add jenkins-ci apt key
+  apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+
+- name: Add jenkins-ci apt repo to sources.list
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' update_cache=yes state=present
+
+#- name: Stop jenkins
+#  service: name=jenkins state=stopped
+
+- name: Install jenkins 
+  apt: name=jenkins state=present
+
+- name: Create jenkins plugins directory
+  file: path={{ jenkins_plugins_dir }}  owner={{ jenkins_user }} group={{ jenkins_group }} mode=0755 state=directory 
+
+- name: Install jenkins plugins
+  get_url: url="{{ jenkins_plugins_base_url }}/{{ item }}.hpi" dest={{ jenkins_plugins_dir }} owner={{ jenkins_user }} group={{ jenkins_group }} mode=0644
+  with_items: "{{ jenkins_plugins | unique }}"
+  when: jenkins_update_plugins
+  notify: Restart jenkins
+
+- name: Create jenkins startup script default config
+  template: src=etc.default.jenkins.j2 dest=/etc/default/jenkins owner=root group=root mode=0644
+  notify: Restart jenkins
+  
+- name: Start jenkins
+  service: name=jenkins state=started

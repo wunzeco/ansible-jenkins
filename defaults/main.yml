@@ -1,0 +1,92 @@
+---
+jenkins_role: master      # or slave
+
+jenkins_user:         jenkins
+jenkins_group:        "{{ jenkins_user }}"
+jenkins_home:         /var/lib/jenkins
+jenkins_http_port:    "8080"
+jenkins_ajp_port:     "-1"
+jenkins_prereq_pkgs:
+  - build-essential
+  - curl
+  - unzip
+  - git
+  - python-dev
+  - python-pip
+
+jenkins_apt_pkgs_extra: []
+jenkins_pip_pkgs_extra: []
+
+jenkins_plugins_dir:      "{{ jenkins_home }}/plugins"
+jenkins_plugins_base_url: "http://updates.jenkins-ci.org/latest"
+jenkins_plugins_default:
+  - credentials
+  - ssh-credentials
+  - scm-api
+  - multiple-scms
+  - git-client
+  - git
+  - github-api
+  - github
+  - ghprb
+  - jquery
+  - backup
+  - mailer
+  - javadoc
+  - maven-plugin
+  - violations
+  - dashboard-view
+  - buildgraph-view
+  - parameterized-trigger
+  - build-pipeline-plugin
+  - jclouds-jenkins
+  - simple-theme-plugin
+
+jenkins_plugins_extra:
+  - ansicolor
+  - ant
+  - antisamy-markup-formatter
+  - authentication-tokens
+  - build-monitor-plugin
+  - build-name-setter
+  - build-pipeline-plugin
+  - buildgraph-view
+  - claim
+  - copyartifact
+  - credentials-binding
+  - cvs
+  - delivery-pipeline-plugin
+  - docker-build-step
+  - docker-commons
+  - envinject
+  - external-monitor-job
+  - gatling
+  - github-oauth
+  - gradle
+  - groovy
+  - junit
+  - ldap
+  - mapdb-api
+  - matrix-auth
+  - matrix-project
+  - pam-auth
+  - parameterized-trigger
+  - plain-credentials
+  - radiatorviewplugin
+  - rebuild
+  - script-security
+  - ssh-agent
+  - ssh-slaves
+  - subversion
+  - timestamper
+  - token-macro
+  - translation
+  - windows-slaves
+  - workflow-step-api
+  - xvfb
+
+jenkins_plugins: "{{ jenkins_plugins_default | union(jenkins_plugins_extra) }}"
+jenkins_update_plugins: true
+
+jenkins_java_args: []
+jenkins_max_open_files: 8192
