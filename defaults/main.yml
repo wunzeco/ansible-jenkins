@@ -64,6 +64,7 @@ jenkins_plugins_extra:
   - github-oauth
   - gradle
   - groovy
+  - job-dsl
   - junit
   - ldap
   - mapdb-api
