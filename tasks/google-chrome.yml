@@ -19,4 +19,4 @@
   unarchive: src=/tmp/chromedriver_linux64.zip dest=/usr/local/share/ mode=0755 copy=no
 
 - name: Install google-chrome driver
-  file: path=/usr/local/share/chromedriver dest=/usr/bin/chromedriver state=link
+  file: src=/usr/local/share/chromedriver dest=/usr/bin/chromedriver state=link
