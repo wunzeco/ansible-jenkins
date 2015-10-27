@@ -5,14 +5,14 @@ galaxy_info:
   license: BSD
   min_ansible_version: 1.9
   platforms:
-   - name: Ubuntu
-     versions:
-      - precise
-      - quantal
-      - raring
-      - saucy
+    - name: Ubuntu
+      versions:
+        - precise
+        - quantal
+        - raring
+        - saucy
   categories:
-   - jenkins
-   - ci
+    - jenkins
+    - ci
 dependencies: []
   
