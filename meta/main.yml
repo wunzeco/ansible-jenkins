@@ -11,7 +11,7 @@ galaxy_info:
         - quantal
         - raring
         - saucy
-  categories:
+  galaxy_tags:
     - jenkins
     - ci
 dependencies: []
