@@ -1,0 +1,6 @@
+---
+- hosts: test-kitchen
+
+  roles:
+    - wunzeco.java
+    - ansible-jenkins
