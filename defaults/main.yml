@@ -80,6 +80,7 @@ jenkins_plugins_extra:
   - radiatorviewplugin
   - rebuild
   - rvm
+  - ruby-runtime
   - script-security
   - ssh-agent
   - ssh-slaves
