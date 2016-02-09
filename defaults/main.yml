@@ -79,6 +79,7 @@ jenkins_plugins_extra:
   - plain-credentials
   - radiatorviewplugin
   - rebuild
+  - rvm
   - script-security
   - ssh-agent
   - ssh-slaves
