@@ -8,9 +8,7 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - precise
-        - quantal
-        - raring
-        - saucy
+        - trusty
   galaxy_tags:
     - jenkins
     - ci
