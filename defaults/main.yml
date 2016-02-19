@@ -59,8 +59,6 @@ jenkins_plugins_extra:
   - credentials-binding
   - cvs
   - delivery-pipeline-plugin
-  - docker-build-step
-  - docker-commons
   - envinject
   - external-monitor-job
   - gatling
