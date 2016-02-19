@@ -1,6 +1,9 @@
 ---
 - hosts: test-kitchen
 
+  vars:
+    jenkins_plugins_extra: []
+
   roles:
     - wunzeco.java
     - ansible-jenkins

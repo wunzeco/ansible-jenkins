@@ -14,14 +14,17 @@
 - name: Add jenkins-ci apt repo to sources.list
   apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' update_cache=yes state=present
 
-#- name: Stop jenkins
-#  service: name=jenkins state=stopped
-
 - name: Install jenkins 
   apt: name=jenkins state=present
 
 - name: Create jenkins plugins directory
   file: path={{ jenkins_plugins_dir }}  owner={{ jenkins_user }} group={{ jenkins_group }} mode=0755 state=directory 
+
+# WARNING:  Some plugins come bundled with Jenkins and don't get upgraded by
+#           simply downloading the latest version into Jenkins plugins directory
+#           unfortunately. E.g. credentials, ant, cvs, maven etc
+#
+# Solution: Force upgrade of bundled plugins. ToDo
 
 - name: Install jenkins plugins
   get_url: url="{{ jenkins_plugins_base_url }}/{{ item }}.hpi" dest={{ jenkins_plugins_dir }} owner={{ jenkins_user }} group={{ jenkins_group }} mode=0644
