@@ -12,13 +12,21 @@
   apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
 
 - name: Add jenkins-ci apt repo to sources.list
-  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' update_cache=yes state=present
+  apt_repository: 
+    repo:         "deb http://pkg.jenkins-ci.org/debian binary/" 
+    update_cache: yes
+    state: present
 
 - name: Install jenkins 
   apt: name=jenkins state=present
 
 - name: Create jenkins plugins directory
-  file: path={{ jenkins_plugins_dir }}  owner={{ jenkins_user }} group={{ jenkins_group }} mode=0755 state=directory 
+  file: 
+    path:  "{{ jenkins_plugins_dir }}"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    mode:  0755
+    state: directory 
 
 # WARNING:  Some plugins come bundled with Jenkins and don't get upgraded by
 #           simply downloading the latest version into Jenkins plugins directory
@@ -27,13 +35,23 @@
 # Solution: Force upgrade of bundled plugins. ToDo
 
 - name: Install jenkins plugins
-  get_url: url="{{ jenkins_plugins_base_url }}/{{ item }}.hpi" dest={{ jenkins_plugins_dir }} owner={{ jenkins_user }} group={{ jenkins_group }} mode=0644
+  get_url: 
+    url:   "{{ jenkins_plugins_base_url }}/{{ item }}.hpi" 
+    dest:  "{{ jenkins_plugins_dir }}"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    mode:  0644
   with_items: "{{ jenkins_plugins | unique }}"
   when: jenkins_update_plugins
   notify: Restart jenkins
 
 - name: Create jenkins startup script default config
-  template: src=etc.default.jenkins.j2 dest=/etc/default/jenkins owner=root group=root mode=0644
+  template: 
+    src:   etc.default.jenkins.j2
+    dest:  /etc/default/jenkins
+    owner: root 
+    group: root 
+    mode:  0644
   notify: Restart jenkins
   
 - name: Start jenkins
