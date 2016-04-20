@@ -7,11 +7,10 @@ jenkins_plugins_dir = "/var/lib/jenkins/plugins"
 jenkins_plugins_dir = "/var/lib/jenkins/plugins"
 
 jenkins_prereq_pkgs = %w( build-essential curl unzip git python-dev python-pip )
-jenkins_plugins_default = %w( 
-    credentials ssh-credentials scm-api multiple-scms git-client git github-api
-    github ghprb jquery backup mailer javadoc maven-plugin violations dashboard-view
-    buildgraph-view parameterized-trigger build-pipeline-plugin jclouds-jenkins
-    simple-theme-plugin )
+jenkins_plugins = %w( 
+    ansicolor authentication-tokens build-monitor-plugin build-name-setter
+    build-pipeline-plugin claim copyartifact credentials-binding
+    dashboard-view delivery-pipeline-plugin )
 
 jenkins_prereq_pkgs.each do |pkg|
   describe package(pkg) do
@@ -32,7 +31,7 @@ describe user(jenkins_user) do
   it { should belong_to_group jenkins_group }
 end
 
-jenkins_plugins_default.each do |plugin|
+jenkins_plugins.each do |plugin|
   describe file("#{jenkins_plugins_dir}/#{plugin}") do
     it { should be_directory }
     it { should be_mode 755 }

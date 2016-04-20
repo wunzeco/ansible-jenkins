@@ -36,7 +36,7 @@
 
 - name: Install jenkins plugins
   get_url: 
-    url:   "{{ jenkins_plugins_base_url }}/{{ item }}.hpi" 
+    url:   "{{ jenkins_update_center_download_url }}/plugins/{{ item.split(':')[0] }}/{{ item.split(':')[1]|default('latest') }}/{{ item.split(':')[0] }}.hpi" 
     dest:  "{{ jenkins_plugins_dir }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
