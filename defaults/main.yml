@@ -23,7 +23,7 @@ jenkins_max_open_files: 8192
 jenkins_update_center_download_url: "http://updates.jenkins-ci.org/download"
 jenkins_plugins_dir:    "{{ jenkins_home }}/plugins"
 jenkins_update_plugins: true
-jenkins_plugins:        []           # A list of plugins in "plugin:version" format. See example below
+jenkins_plugins:        []           # A list of plugins in "pluginID:version" format. See example below
 
 jenkins_google_chrome_driver_version: 2.21
 jenkins_google_chrome_install: false

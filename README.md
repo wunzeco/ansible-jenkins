@@ -28,6 +28,13 @@ Install jenkins and some plugins
     - wunzeco.jenkins
 ```
 
+> **Note**:
+>
+>    All plugins (including their dependencies) need to be listed in the form 
+>    `pluginID:version` as there is no transitive dependency resolution. 
+>    However, if `version` is omitted for a plugin the latest version will be
+>    installed.
+
 
 ## Testing
 
