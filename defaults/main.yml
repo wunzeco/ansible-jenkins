@@ -4,8 +4,18 @@ jenkins_role: master      # or slave
 jenkins_user:         jenkins
 jenkins_group:        "{{ jenkins_user }}"
 jenkins_home:         /var/lib/jenkins
+
+#############
+## Config
 jenkins_http_port:    "8080"
 jenkins_ajp_port:     "-1"
+jenkins_java_args: []
+jenkins_max_open_files: 8192
+
+
+#####################
+## Package & Plugins
+jenkins_version: 1.651.1
 jenkins_prereq_pkgs:
   - build-essential
   - curl
@@ -13,12 +23,8 @@ jenkins_prereq_pkgs:
   - git
   - python-dev
   - python-pip
-
 jenkins_apt_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
-
-jenkins_java_args: []
-jenkins_max_open_files: 8192
 
 jenkins_update_center_download_url: "http://updates.jenkins-ci.org/download"
 jenkins_plugins_dir:    "{{ jenkins_home }}/plugins"
