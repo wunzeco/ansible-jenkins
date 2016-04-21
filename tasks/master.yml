@@ -9,7 +9,9 @@
   with_items: "{{ jenkins_pip_pkgs_extra }}"
 
 - name: Add jenkins-ci apt key
-  apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+  apt_key:
+    url:   "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
+    state: present
 
 - name: Add jenkins-ci apt repo to sources.list
   apt_repository: 
