@@ -17,7 +17,7 @@
 # This task is a hack to allow installing v1.x version of Jenkins. So remove once apt repo is fixed.
 - name: Set jenkins apt repo prefix
   set_fact: _repo_prefix='-stable'
-  when: jenkins_version.split('.')[0] == 1
+  when: jenkins_version.find('1.6') != -1
 
 - name: Add jenkins-ci apt key
   apt_key:
