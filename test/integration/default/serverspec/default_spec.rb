@@ -6,11 +6,17 @@ jenkins_http_port = 8080
 jenkins_plugins_dir = "/var/lib/jenkins/plugins"
 jenkins_plugins_dir = "/var/lib/jenkins/plugins"
 
+      - 'credentials:1.27'
+      - 'credentials-binding:1.7'
+      - 'dashboard-view:2.9.7'
+      - 'delivery-pipeline-plugin:0.9.9'
+      - 'plain-credentials:1.1'
+      - 'workflow-step-api:2.0'
 jenkins_prereq_pkgs = %w( build-essential curl unzip git python-dev python-pip )
 jenkins_plugins = %w( 
     ansicolor authentication-tokens build-monitor-plugin build-name-setter
-    build-pipeline-plugin claim copyartifact credentials-binding
-    dashboard-view delivery-pipeline-plugin )
+    build-pipeline-plugin claim copyartifact credentials credentials-binding
+    dashboard-view delivery-pipeline-plugin plain-credentials workflow-step-api )
 
 jenkins_prereq_pkgs.each do |pkg|
   describe package(pkg) do

@@ -11,9 +11,12 @@
       - 'build-pipeline-plugin:1.5.2'
       - 'claim:2.8'
       - 'copyartifact:1.38'
+      - 'credentials:1.27'
       - 'credentials-binding:1.7'
       - 'dashboard-view:2.9.7'
       - 'delivery-pipeline-plugin:0.9.9'
+      - 'plain-credentials:1.1'
+      - 'workflow-step-api:2.0'
 
   roles:
     - wunzeco.java
