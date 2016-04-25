@@ -2,5 +2,6 @@
 
 - include: "{{ jenkins_role|default('master') }}.yml"
 
-- include: google-chrome.yml
+- name: google-chrome-install
+  include: google-chrome.yml
   when: jenkins_google_chrome_install
