@@ -4,14 +4,7 @@ jenkins_user = 'jenkins'
 jenkins_group = jenkins_user
 jenkins_http_port = 8080
 jenkins_plugins_dir = "/var/lib/jenkins/plugins"
-jenkins_plugins_dir = "/var/lib/jenkins/plugins"
 
-      - 'credentials:1.27'
-      - 'credentials-binding:1.7'
-      - 'dashboard-view:2.9.7'
-      - 'delivery-pipeline-plugin:0.9.9'
-      - 'plain-credentials:1.1'
-      - 'workflow-step-api:2.0'
 jenkins_prereq_pkgs = %w( build-essential curl unzip git python-dev python-pip )
 jenkins_plugins = %w( 
     ansicolor authentication-tokens build-monitor-plugin build-name-setter
@@ -56,4 +49,22 @@ end
 
 describe port(jenkins_http_port) do
   it { should be_listening }
+end
+
+
+#######################################
+# google-chrome
+
+describe package('google-chrome-stable') do
+  it { should be_installed }
+end
+
+describe file('/usr/local/share/chromedriver') do
+  it { should be_file }
+  it { should be_mode 755 }
+end
+
+describe file('/usr/bin/chromedriver') do
+  it { should exist }
+  it { should be_symlink }
 end

@@ -17,6 +17,7 @@
       - 'delivery-pipeline-plugin:0.9.9'
       - 'plain-credentials:1.1'
       - 'workflow-step-api:2.0'
+    jenkins_google_chrome_install: true
 
   roles:
     - wunzeco.java
