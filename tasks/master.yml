@@ -48,6 +48,10 @@
   service: name=jenkins state=stopped
   when: not h.stat.isdir|default(false)
 
+- name: Stop processes running as jenkins user
+  command: pkill -u jenkins
+  when: not h.stat.isdir|default(false)
+
 - name: Ensure jenkins user home directory is in the appropriate location
   user:
     name:  "{{ jenkins_user }}"
