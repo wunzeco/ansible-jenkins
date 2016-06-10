@@ -15,7 +15,7 @@ jenkins_max_open_files: 8192
 
 #####################
 ## Package & Plugins
-jenkins_version: 1.651.1
+jenkins_version: 1.651.2
 jenkins_prereq_pkgs:
   - build-essential
   - curl

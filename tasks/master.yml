@@ -1,11 +1,15 @@
 ---
 
 - name: Install jenkins prerequisite packages
-  apt: name={{ item }} state=present
+  apt:
+    name:  "{{ item }}"
+    state: present
   with_items: "{{ jenkins_prereq_pkgs|union(jenkins_apt_pkgs_extra) }}"
 
 - name: Install extra pip packages desired
-  pip: name={{ item }} state=present
+  pip:
+    name:  "{{ item }}"
+    state: present
   with_items: "{{ jenkins_pip_pkgs_extra }}"
 
 ##  WARNING: As of 20/03/16, Jenkins apt repo got broken. Only the latest 
@@ -31,7 +35,25 @@
     state: present
 
 - name: Install jenkins 
-  apt: name="jenkins={{ jenkins_version|default('*') }}" state=present
+  apt:
+    name:  "jenkins={{ jenkins_version|default('*') }}"
+    state: present
+
+- name: Check jenkins home dir exists in case it is different from the default /var/lib/jenkins
+  stat:
+    path: "{{ jenkins_home }}"
+  register: h
+
+- name: Stop jenkins
+  service: name=jenkins state=stopped
+  when: not h.stat.isdir|default(false)
+
+- name: Ensure jenkins user home directory is in the appropriate location
+  user:
+    name:  "{{ jenkins_user }}"
+    home:  "{{ jenkins_home }}"
+    move_home: yes
+  when: not h.stat.isdir|default(false)
 
 - name: Create jenkins plugins directory
   file: 

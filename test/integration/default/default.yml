@@ -2,7 +2,7 @@
 - hosts: test-kitchen
 
   vars:
-    jenkins_version: 1.651.1
+    jenkins_version: 1.651.2
     jenkins_plugins:
       - 'ansicolor:0.4.2'
       - 'authentication-tokens:1.2'
