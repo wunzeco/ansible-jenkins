@@ -2,23 +2,52 @@
 - hosts: test-kitchen
 
   vars:
-    jenkins_version: 1.651.2
+    jenkins_version: 2.9
+    jenkins_java_args: 
+      - "-Djava.awt.headless=true"
+      - "-Djenkins.install.runSetupWizard=false"
     jenkins_plugins:
-      - 'ansicolor:0.4.2'
-      - 'authentication-tokens:1.2'
-      - 'build-monitor-plugin:1.8+build.201601112328'
-      - 'build-name-setter:1.6.3'
-      - 'build-pipeline-plugin:1.5.2'
-      - 'claim:2.8'
-      - 'copyartifact:1.38'
-      - 'credentials:1.27'
-      - 'credentials-binding:1.7'
-      - 'dashboard-view:2.9.7'
-      - 'delivery-pipeline-plugin:0.9.9'
-      - 'plain-credentials:1.1'
-      - 'workflow-step-api:2.0'
+      - "ansicolor:0.4.2"
+      - "ant:1.3"
+      - "antisamy-markup-formatter:1.5"
+      - "authentication-tokens:1.2"
+      - "build-monitor-plugin:1.9+build.201606131328"
+      - "build-name-setter:1.6.5"
+      - "build-pipeline-plugin:1.5.3.1"
+      - "claim:2.8"
+      - "conditional-buildstep:1.3.5"
+      - "copyartifact:1.38"
+      - "credentials-binding:1.8"
+      - "credentials:2.1.1"
+      - "dashboard-view:2.9.10"
+      - "delivery-pipeline-plugin:0.9.11"
+      - "external-monitor-job:1.4"
+      - "icon-shim:2.0.3"
+      - "javadoc:1.3"
+      - "jquery:1.11.2-0"
+      - "junit:1.13"
+      - "ldap:1.12"
+      - "mailer:1.17"
+      - "matrix-auth:1.4"
+      - "matrix-project:1.7"
+      - "maven-plugin:2.13"
+      - "pam-auth:1.2"
+      - "parameterized-trigger:2.31"
+      - "plain-credentials:1.2"
+      - "run-condition:1.0"
+      - "script-security:1.19"
+      - "structs:1.1.1"
+      - "token-macro:1.12.1"
+      - "windows-slaves:1.1"
+      - "workflow-step-api:2.1"
     jenkins_google_chrome_install: true
 
   roles:
     - wunzeco.java
     - ansible-jenkins
+
+
+## How to get list of installed plugins
+#     admin_password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+#     curl -s -k "http://admin:$admin_password@localhost:8080/pluginManager/api/json?depth=1" | \
+#           jq '.plugins[]|{n:.shortName, v:.version}' -c > plugins

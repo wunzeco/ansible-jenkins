@@ -7,15 +7,18 @@ jenkins_home:         /var/lib/jenkins
 
 #############
 ## Config
-jenkins_http_port:    "8080"
-jenkins_ajp_port:     "-1"
-jenkins_java_args: []
+jenkins_args:
+  - "--webroot=/var/cache/$NAME/war"
+  - "--httpPort=$HTTP_PORT"
+jenkins_http_port:      "8080"
+jenkins_ajp_port:       "-1"
+jenkins_java_args:      []
 jenkins_max_open_files: 8192
 
 
 #####################
 ## Package & Plugins
-jenkins_version: 1.651.2
+jenkins_version:  "*"             # version number e.g. 1.651.3, 2.9, '*' for latest
 jenkins_prereq_pkgs:
   - build-essential
   - curl
@@ -40,7 +43,7 @@ jenkins_google_chrome_install: false
 ##    Note: Plugin version NOT specified implies "latest". So latest version of
 ##          that plugin will be installed.
 ##
-## jenkins_plugins: []
+## jenkins_plugins:
 ##   - 'ansicolor:0.4.2'
 ##   - 'ant:1.2'
 ##   - 'antisamy-markup-formatter:1.3'
