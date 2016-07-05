@@ -41,6 +41,7 @@
       - "token-macro:1.12.1"
       - "windows-slaves:1.1"
       - "workflow-step-api:2.1"
+    jenkins_create_slave_ui_user:  true
     jenkins_google_chrome_install: true
 
   roles:

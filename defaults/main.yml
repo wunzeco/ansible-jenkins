@@ -5,8 +5,8 @@ jenkins_user:         jenkins
 jenkins_group:        "{{ jenkins_user }}"
 jenkins_home:         /var/lib/jenkins
 jenkins_scripts_dir:  "{{ jenkins_home }}/scripts"
-jenkins_admin_username: admin
-jenkins_admin_password:
+jenkins_admin_user:   admin
+jenkins_admin_pass:
 
 ###########################
 ## Config - Jenkins Master

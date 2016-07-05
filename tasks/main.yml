@@ -2,15 +2,14 @@
 
 - include: "{{ jenkins_role|default('master') }}.yml"
 
-- debug: var=jenkins_role
-
-- name: Install jenkins-cli
+- name: Jenkins CLI
   include: cli.yml
   when: jenkins_role == 'master'
 
-- include: users.yml
+- name: UI users
+  include: users.yml
   when: jenkins_role == 'master'
 
-#- name: google-chrome-install
-#  include: google-chrome.yml
-#  when: jenkins_google_chrome_install
+- name: google-chrome-install
+  include: google-chrome.yml
+  when: jenkins_google_chrome_install
