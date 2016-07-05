@@ -1,0 +1,60 @@
+---
+
+- name: Create jenkins slave group
+  group:
+    name:  "{{ jenkins_slave_group }}"
+
+- name: Create jenkins slave user
+  user:
+    name:  "{{ jenkins_slave_user }}"
+    group: "{{ jenkins_slave_group }}"
+    home:  "{{ jenkins_slave_home }}"
+    shell: "/bin/bash"
+
+- name: Ensure jenkins slave home dir is created with appropriate ownership
+  file:
+    path:  "{{ jenkins_slave_home }}"
+    owner: "{{ jenkins_slave_user }}"
+    group: "{{ jenkins_slave_group }}"
+    state: directory
+
+- name: Install daemon package
+  apt: name=daemon state=present
+
+- name: Get jenkins slave package checksum file
+  get_url:
+    url:  "{{ jenkins_slave_checksum_file_url }}"
+    dest: "{{ jenkins_slave_home }}"
+
+- name: Get checksum of jenkins slave package
+  shell: >
+      cat {{ jenkins_slave_home }}/{{ jenkins_slave_checksum_file }}
+  register: chksum
+
+- name: Download jenkins slave package
+  get_url:
+    url:      "{{ jenkins_slave_jar_url }}"
+    dest:     "{{ jenkins_slave_home }}/{{ jenkins_slave_jar }}"
+    checksum: "md5:{{ chksum.stdout }}"
+  notify: Restart jenkins slave
+
+- name: Create jenkins slave startup config file
+  template:
+    src:    etc.default.jenkins-slave.j2
+    dest:   /etc/default/jenkins-slave
+    owner:  root
+    group:  root
+    mode:   0644
+  notify: Restart jenkins slave
+
+- name: Create jenkins slave upstart script
+  copy:
+    src:    jenkins-slave.{{ ansible_os_family }}
+    dest:   /etc/init.d/jenkins-slave
+    owner:  root
+    group:  root
+    mode:   0755
+  notify: Restart jenkins slave
+ 
+- name: Start jenkins slave
+  service: name=jenkins-slave enabled=yes state=started

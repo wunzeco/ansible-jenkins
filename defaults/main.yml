@@ -4,7 +4,13 @@ jenkins_role: master      # or slave
 jenkins_user:         jenkins
 jenkins_group:        "{{ jenkins_user }}"
 jenkins_home:         /var/lib/jenkins
+jenkins_scripts_dir:  "{{ jenkins_home }}/scripts"
+jenkins_admin_username: admin
+jenkins_admin_password:
 
+###########################
+## Config - Jenkins Master
+###########################
 #############
 ## Config
 jenkins_args:
@@ -16,8 +22,10 @@ jenkins_java_args:      []
 jenkins_max_open_files: 8192
 
 
-#####################
-## Package & Plugins
+#####################################
+## Package & Plugins - Jenkins Master
+#####################################
+
 jenkins_version:  "*"             # version number e.g. 1.651.3, 2.9, '*' for latest
 jenkins_prereq_pkgs:
   - build-essential
@@ -36,6 +44,40 @@ jenkins_plugins:        []           # A list of plugins in "pluginID:version" f
 
 jenkins_google_chrome_driver_version: 2.21
 jenkins_google_chrome_install: false
+
+
+jenkins_create_slave_ui_user: false
+
+######################
+## Jenkins Slave
+######################
+
+jenkins_slave_user:    jenkins-slave
+jenkins_slave_group:   "{{ jenkins_slave_user }}"
+jenkins_slave_home:    /home/{{ jenkins_slave_user }}
+
+jenkins_slave_version: 2.1
+jenkins_slave_jar:     "swarm-client-{{ jenkins_slave_version }}-jar-with-dependencies.jar"
+jenkins_slave_jar_url: "http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ jenkins_slave_version }}/{{ jenkins_slave_jar }}"
+jenkins_slave_checksum_file: "{{ jenkins_slave_jar }}.md5"
+jenkins_slave_checksum_file_url: "{{ jenkins_slave_jar_url }}.md5"
+
+jenkins_slave_ui_user:        jenkins-slave
+jenkins_slave_ui_pass:        "J3Nk1nsSl@ve"
+jenkins_slave_ui_user_email:  jenkins-slave@example.com
+jenkins_slave_java_args:      []
+jenkins_master_url:           "http://localhost:8080"
+jenkins_slave_executors:      1
+jenkins_slave_labels:         [ "swarm-{{ ansible_default_ipv4.address }}" ]
+jenkins_slave_mode:           normal
+jenkins_slave_name:           ''
+jenkins_slave_extra_args:     [ '-disableSslVerification' ]
+jenkins_slave_description:    ''
+jenkins_slave_tool_locations: []      
+#jenkins_slave_tool_locations: 
+#  - name: aTool
+#    location: /path/to/tool
+jenkins_slave_auto_discovery_address: ''
 
 
 ###########

@@ -67,12 +67,6 @@
     mode:  0755
     state: directory 
 
-# WARNING:  Some plugins come bundled with Jenkins and don't get upgraded by
-#           simply downloading the latest version into Jenkins plugins directory
-#           unfortunately. E.g. credentials, ant, cvs, maven etc
-#
-# Solution: Force upgrade of bundled plugins. ToDo
-
 - name: Install jenkins plugins
   get_url: 
     url:   "{{ jenkins_update_center_download_url }}/plugins/{{ item.split(':')[0] }}/{{ item.split(':')[1]|default('latest') }}/{{ item.split(':')[0] }}.hpi" 

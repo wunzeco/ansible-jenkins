@@ -2,3 +2,6 @@
 
 - name: Restart jenkins
   service: name=jenkins state=restarted
+
+- name: Restart jenkins slave
+  service: name=jenkins-slave state=restarted

@@ -14,7 +14,12 @@ platforms:
   - name: ubuntu-14.04
 
 suites:
-  - name: default
+  - name: master
     driver:
       network:
         - ["private_network", { ip: "172.29.129.172" }]
+
+  - name: slave
+    driver:
+      network:
+        - ["private_network", { ip: "172.29.129.191" }]

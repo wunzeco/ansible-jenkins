@@ -1,0 +1,12 @@
+---
+- hosts: test-kitchen
+
+  vars:
+    jenkins_role: slave
+    jenkins_google_chrome_install: true
+    jenkins_master_url: "http://172.29.129.172:8080"
+    jenkins_slave_name: "slave-test-kitchen"
+
+  roles:
+    - wunzeco.java
+    - ansible-jenkins

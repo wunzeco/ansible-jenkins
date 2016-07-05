@@ -1,0 +1,44 @@
+---
+
+- name: Get jenkins admin password
+  shell: >
+      cat {{ jenkins_home }}/secrets/initialAdminPassword || true
+  when: not jenkins_admin_password|default(false)
+  register: admin_pw
+
+- name: Get admin password
+  set_fact: jenkins_admin_password="{{ admin_pw.stdout }}"
+  when: admin_pw|success and not jenkins_admin_password
+
+- name: Create jenkins slave ui user
+  shell: >
+      java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }} \
+        groovy {{ jenkins_scripts_dir }}/cli_helper.groovy create_or_update_user \
+        {{ jenkins_slave_ui_username }} \
+        {{ jenkins_slave_ui_user_email }} \
+        {{ jenkins_slave_ui_password }} \
+        "{{ jenkins_slave_ui_fullname|default('slave - Managed by Ansible') }}" \
+        --username {{ jenkins_admin_username }} \
+        --password {{ jenkins_admin_password }}
+  args:
+    chdir: "{{ jenkins_scripts_dir }}"
+        
+- name: Set jenkins slave permission
+  set_fact: jenkins_slave_perms='slave_build slave_connect slave_configure slave_create slave_delete slave_disconnect'
+
+- name: Grant matrix authorization strategy permissions to jenkins slave ui user
+  shell: >
+      java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }} \
+        groovy {{ jenkins_scripts_dir }}/grant_global_matrix_permissions.groovy \
+        {{ jenkins_slave_ui_username }} \
+        global_read \
+        slave_build \
+        slave_connect \
+        slave_configure \ 
+        slave_create \
+        slave_delete \
+        slave_disconnect \
+        --username {{ jenkins_admin_username }} \
+        --password {{ jenkins_admin_password }}
+  args:
+    chdir: "{{ jenkins_scripts_dir }}"
