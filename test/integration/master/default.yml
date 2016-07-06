@@ -38,6 +38,7 @@
       - "script-security:1.19"
       - "ssh-credentials:1.12"
       - "structs:1.1.1"
+      - "swarm:2.1"
       - "token-macro:1.12.1"
       - "windows-slaves:1.1"
       - "workflow-step-api:2.1"

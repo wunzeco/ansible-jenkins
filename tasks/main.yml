@@ -1,6 +1,19 @@
 ---
 
-- include: "{{ jenkins_role|default('master') }}.yml"
+- name: Install jenkins prerequisite packages
+  apt:
+    name:  "{{ item }}"
+    state: present
+  with_items: "{{ jenkins_prereq_pkgs|union(jenkins_apt_pkgs_extra) }}"
+
+- name: Install extra pip packages desired
+  pip:
+    name:  "{{ item }}"
+    state: present
+  with_items: "{{ jenkins_pip_pkgs_extra }}"
+
+- name: Jenkins Install
+  include: "{{ jenkins_role|default('master') }}.yml"
 
 - name: Jenkins CLI
   include: cli.yml

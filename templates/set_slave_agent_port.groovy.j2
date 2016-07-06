@@ -1,0 +1,14 @@
+import jenkins.model.Jenkins;
+
+
+def instance = Jenkins.getInstance()
+
+/*
+    param: 
+         0     to indicate random available TCP port. 
+        -1     to disable this service.
+        port   fixed port (integer)
+*/
+instance.setSlaveAgentPort({{ jenkins_slave_agent_port }})
+
+instance.save()

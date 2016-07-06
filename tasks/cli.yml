@@ -1,17 +1,37 @@
 ---
 
-- name: Create jenkins scripts dir
+# https://wiki.jenkins-ci.org/display/JENKINS/Post-initialization+script
+- name: Create jenkins post-initialization scripts dir
   file:
-    path:  "{{ jenkins_scripts_dir }}"
+    path:  "{{ jenkins_post_init_scripts_dir }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
     mode:  0755
     state: directory
 
+- name: Create jenkins scripts dir
+  file:
+    path:  "{{ jenkins_helper_scripts_dir }}"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    mode:  0755
+    state: directory
+
+- name: Copy jenkins post-init scripts
+  template:
+    src:   "{{ item }}.j2"
+    dest:  "{{ jenkins_post_init_scripts_dir }}/{{ item }}"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    mode:  0755
+  with_items:
+    - set_slave_agent_port.groovy
+  notify: Restart jenkins
+
 - name: Copy jenkins config helper scripts
   copy:
     src:   "{{ item }}"
-    dest:  "{{ jenkins_scripts_dir }}"
+    dest:  "{{ jenkins_helper_scripts_dir }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
     mode:  0644
@@ -26,5 +46,17 @@
           rm -rf WEB-INF &&
           chown {{ jenkins_user }}: jenkins-cli.jar
   args:
-    chdir:   "{{ jenkins_scripts_dir }}"
-    creates: "{{ jenkins_scripts_dir }}/jenkins-cli.jar"
+    chdir:   "{{ jenkins_helper_scripts_dir }}"
+    creates: "{{ jenkins_helper_scripts_dir }}/jenkins-cli.jar"
+
+# Trigger any pending restart handlers now so that post-init scripts can run 
+# after Jenkins starts up. This is necessary for jenkins-cli commands to work
+- meta: flush_handlers
+
+- name: Wait for jenkins to be available
+  uri:
+    url:  "http://localhost:{{ jenkins_http_port }}/login"
+  register: resp
+  until: resp.status|default(false) == 200
+  retries: 10
+  delay: 10

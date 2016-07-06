@@ -1,17 +1,5 @@
 ---
 
-- name: Install jenkins prerequisite packages
-  apt:
-    name:  "{{ item }}"
-    state: present
-  with_items: "{{ jenkins_prereq_pkgs|union(jenkins_apt_pkgs_extra) }}"
-
-- name: Install extra pip packages desired
-  pip:
-    name:  "{{ item }}"
-    state: present
-  with_items: "{{ jenkins_pip_pkgs_extra }}"
-
 ##  WARNING: As of 20/03/16, Jenkins apt repo got broken. Only the latest 
 ##           version happens to be present. Older versions are missing. See
 ##           issues raised 

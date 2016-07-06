@@ -4,9 +4,11 @@ jenkins_role: master      # or slave
 jenkins_user:         jenkins
 jenkins_group:        "{{ jenkins_user }}"
 jenkins_home:         /var/lib/jenkins
-jenkins_scripts_dir:  "{{ jenkins_home }}/scripts"
 jenkins_admin_user:   admin
 jenkins_admin_pass:
+
+jenkins_helper_scripts_dir:    "{{ jenkins_home }}/scripts"
+jenkins_post_init_scripts_dir: "{{ jenkins_home }}/init.groovy.d"
 
 ###########################
 ## Config - Jenkins Master
@@ -47,6 +49,7 @@ jenkins_google_chrome_install: false
 
 
 jenkins_create_slave_ui_user: false
+jenkins_slave_agent_port: 49185
 
 ######################
 ## Jenkins Slave
