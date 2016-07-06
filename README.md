@@ -12,7 +12,7 @@ Install jenkins and some plugins
 - hosts: jenkinsmaster
 
   vars:
-    jenkins_version: 1.656
+    jenkins_version: 2.12   			# Default is '*' for latest version
     jenkins_plugins:
       - 'ansicolor:0.4.2'
       - 'authentication-tokens:1.2'
@@ -39,7 +39,8 @@ Install jenkins and some plugins
 To get a list of plugins from an existing Jenkins.
 
 ```
-curl -sSL "http://localhost:8080/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/'
+curl -sSL "http://localhost:8080/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" \
+        | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/'
 ```
 
 
@@ -47,7 +48,7 @@ curl -sSL "http://localhost:8080/pluginManager/api/xml?depth=1&xpath=/*/*/shortN
 
 ```
 cd ansible-jenkins
-kitchen test
+kitchen verify && kitchen destroy
 ```
 
 
