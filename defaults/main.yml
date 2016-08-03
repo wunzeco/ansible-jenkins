@@ -68,6 +68,7 @@ jenkins_slave_checksum_file_url: "{{ jenkins_slave_jar_url }}.md5"
 jenkins_slave_ui_user:        jenkins-slave
 jenkins_slave_ui_pass:        "J3Nk1nsSl@ve"
 jenkins_slave_ui_user_email:  jenkins-slave@example.com
+jenkins_slave_ui_fullname:
 jenkins_slave_java_args:      []
 jenkins_master_url:           "http://localhost:8080"
 jenkins_slave_executors:      1
@@ -81,6 +82,25 @@ jenkins_slave_tool_locations: []
 #  - name: aTool
 #    location: /path/to/tool
 jenkins_slave_auto_discovery_address: ''
+
+
+######################
+## Jenkins UI Users
+######################
+
+jenkins_ui_users: []
+
+## Note: Conscious decision made not to create other UI users based on the 
+##       assumption that users will be allowed to sign up on Jenkins UI. The 
+##       reason for this is to allow users manage their passwords.
+##
+##       For valid permissions values for granting Global Matrix permissions see
+##       script in this role at files/grant_global_matrix_permissions.groovy 
+##
+## jenkins_ui_users:
+##   - username:
+##     permissions: [ global_read, job_build, job_cancel, job_configure,
+##                  job_create, job_discover, job_read, job_workspace ]
 
 
 ###########

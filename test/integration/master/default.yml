@@ -44,6 +44,10 @@
       - "workflow-step-api:2.1"
     jenkins_create_slave_ui_user:  true
     jenkins_google_chrome_install: true
+    jenkins_ui_users:
+      - username: ogonna
+        permissions: [ global_read, job_build, job_cancel, job_configure, job_create
+                       job_discover, job_read, job_workspace ]
 
   roles:
     - wunzeco.java
@@ -53,4 +57,5 @@
 ## How to get list of installed plugins
 #     admin_password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
 #     curl -s -k "http://admin:$admin_password@localhost:8080/pluginManager/api/json?depth=1" | \
-#           jq '.plugins[]|{n:.shortName, v:.version}' -c > plugins
+#           jq '.plugins[]|{n:.shortName, v:.version}' -c | \
+#           sed 's/.*:"\(.*\)",.*:"\(.*\)"}/  - "\2:\1"/' > plugins.list
