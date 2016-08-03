@@ -30,7 +30,7 @@ valid_perms_map = [
    job_cancel:                   hudson.model.Item.CANCEL,
    job_configure:                hudson.model.Item.CONFIGURE,
    job_create:                   hudson.model.Item.CREATE,
-   job_delete:                   hudson.model.Computer.DELETE,
+   job_delete:                   hudson.model.Item.DELETE,
    job_discover:                 hudson.model.Item.DISCOVER,
    job_read:                     hudson.model.Item.READ,
    job_workspace:                hudson.model.Item.WORKSPACE,
