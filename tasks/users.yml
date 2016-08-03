@@ -24,9 +24,6 @@
     chdir: "{{ jenkins_helper_scripts_dir }}"
   when: jenkins_create_slave_ui_user
         
-- name: Set jenkins slave permission
-  set_fact: jenkins_slave_perms='slave_build slave_connect slave_configure slave_create slave_delete slave_disconnect'
-
 - name: Grant matrix authorization strategy permissions to jenkins slave ui user
   shell: >
       java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }}/jenkins \
