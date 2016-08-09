@@ -1,24 +1,13 @@
 ---
 
-##  WARNING: As of 20/03/16, Jenkins apt repo got broken. Only the latest 
-##           version happens to be present. Older versions are missing. See
-##           issues raised 
-##              * https://issues.jenkins-ci.org/browse/JENKINS-33285
-##              * https://issues.jenkins-ci.org/browse/INFRA-77
-#
-# This task is a hack to allow installing v1.x version of Jenkins. So remove once apt repo is fixed.
-- name: Set jenkins apt repo prefix
-  set_fact: _repo_prefix='-stable'
-  when: jenkins_version|string|search('^1.6.*')
-
 - name: Add jenkins-ci apt key
   apt_key:
-    url:   "http://pkg.jenkins-ci.org/debian{{ _repo_prefix|default('') }}/jenkins-ci.org.key"
+    url:   "http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key"
     state: present
 
 - name: Add jenkins-ci apt repo to sources.list
   apt_repository: 
-    repo:         "deb http://pkg.jenkins-ci.org/debian{{ _repo_prefix|default('') }} binary/" 
+    repo:         "deb http://pkg.jenkins-ci.org/debian-stable binary/" 
     update_cache: yes
     state: present
 
