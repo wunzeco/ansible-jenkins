@@ -15,11 +15,17 @@
   apt:
     name:  "jenkins={{ jenkins_version|default('*') }}"
     state: present
+  register: install
 
 - name: Check jenkins home dir exists in case it is different from the default /var/lib/jenkins
   stat:
     path: "{{ jenkins_home }}"
   register: h
+
+- name: Wait for jenkins initial admin password file to be created
+  wait_for: 
+    path: "/var/lib/jenkins/secrets/initialAdminPassword"
+  when: not h.stat.isdir|default(false) and install|changed
 
 - name: Stop jenkins
   service: name=jenkins state=stopped
@@ -63,6 +69,7 @@
     group: root 
     mode:  0644
   notify: Restart jenkins
-  
+
 - name: Start jenkins
-  service: name=jenkins state=started
+  service: name=jenkins enabled=yes state=started
+
