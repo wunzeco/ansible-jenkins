@@ -1,19 +1,24 @@
 ---
 
-- name: Add jenkins-ci apt key
-  apt_key:
-    url:   "http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key"
-    state: present
+#- name: Add jenkins-ci apt key
+#  apt_key:
+#    url:   "http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key"
+#    state: present
+#
+#- name: Add jenkins-ci apt repo to sources.list
+#  apt_repository: 
+#    repo:         "deb http://pkg.jenkins-ci.org/debian-stable binary/" 
+#    update_cache: yes
+#    state: present
 
-- name: Add jenkins-ci apt repo to sources.list
-  apt_repository: 
-    repo:         "deb http://pkg.jenkins-ci.org/debian-stable binary/" 
-    update_cache: yes
-    state: present
+- name: Get jenkins debian package
+  get_url: 
+    url:   "{{ jenkins_pkg_url }}" 
+    dest:  "/var/tmp/{{ jenkins_deb_pkg }}"
 
 - name: Install jenkins 
   apt:
-    name:  "jenkins={{ jenkins_version|default('*') }}"
+    deb:   "/var/tmp/{{ jenkins_deb_pkg }}"
     state: present
   register: install
 

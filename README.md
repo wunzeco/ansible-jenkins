@@ -12,7 +12,7 @@ Install jenkins and some plugins
 - hosts: jenkinsmaster
 
   vars:
-    jenkins_version: 2.12   			# Default is '*' for latest version
+    jenkins_version: 2.7.4
     jenkins_plugins:
       - 'ansicolor:0.4.2'
       - 'authentication-tokens:1.2'

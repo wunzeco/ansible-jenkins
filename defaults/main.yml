@@ -28,7 +28,7 @@ jenkins_max_open_files: 8192
 ## Package & Plugins - Jenkins Master
 #####################################
 
-jenkins_version:  "*"             # version number e.g. 1.651.3, 2.9, '*' for latest
+jenkins_version:  "2.7.4"             # version number e.g. 2.7.4
 jenkins_prereq_pkgs:
   - build-essential
   - curl
@@ -39,6 +39,8 @@ jenkins_prereq_pkgs:
 jenkins_apt_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
 
+jenkins_deb_pkg: "jenkins_{{ jenkins_version|mandatory }}_all.deb"
+jenkins_pkg_url: "http://pkg.jenkins.io/debian-stable/binary/{{ jenkins_deb_pkg }}"
 jenkins_update_center_download_url: "http://updates.jenkins-ci.org/download"
 jenkins_plugins_dir:    "{{ jenkins_home }}/plugins"
 jenkins_update_plugins: true
