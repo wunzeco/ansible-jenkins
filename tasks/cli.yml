@@ -41,7 +41,7 @@
 
 - name: Extract jenkins-cli.jar
   shell: >
-      jar -xf /usr/share/jenkins/jenkins.war WEB-INF/jenkins-cli.jar &&
+      jar -xf {{ jenkins_war_path }} WEB-INF/jenkins-cli.jar &&
           mv WEB-INF/jenkins-cli.jar ./ &&
           rm -rf WEB-INF &&
           chown {{ jenkins_user }}: jenkins-cli.jar

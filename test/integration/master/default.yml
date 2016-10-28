@@ -3,6 +3,7 @@
 
   vars_files:
     - roles/ansible-jenkins/test/vars.yml
+    - roles/ansible-jenkins/test/{{ ansible_os_family|lower }}.yml
 
   roles:
     - wunzeco.java

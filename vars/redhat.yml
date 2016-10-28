@@ -1,0 +1,13 @@
+---
+
+jenkins_prereq_pkgs:
+  - curl
+  - unzip
+  - git
+  - java-devel
+  - python-devel
+  - python-pip
+  - "@Development tools"
+
+jenkins_pkg_url: "http://pkg.jenkins.io/redhat-stable/{{ jenkins_rpm_pkg }}"
+jenkins_war_path: /usr/lib/jenkins/jenkins.war

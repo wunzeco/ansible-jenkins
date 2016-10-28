@@ -1,31 +1,39 @@
 ---
 
-#- name: Add jenkins-ci apt key
-#  apt_key:
-#    url:   "http://pkg.jenkins-ci.org/debian-stable/jenkins-ci.org.key"
-#    state: present
-#
-#- name: Add jenkins-ci apt repo to sources.list
-#  apt_repository: 
-#    repo:         "deb http://pkg.jenkins-ci.org/debian-stable binary/" 
-#    update_cache: yes
-#    state: present
-
 - name: Get jenkins debian package
   get_url: 
     url:   "{{ jenkins_pkg_url }}" 
     dest:  "/var/tmp/{{ jenkins_deb_pkg }}"
+  when: ansible_os_family|lower == 'debian'
 
-- name: Install jenkins 
+- name: Install jenkins | Debian
   apt:
     deb:   "/var/tmp/{{ jenkins_deb_pkg }}"
     state: present
+  when: ansible_os_family|lower == 'debian'
+  register: install
+
+- name: Get jenkins rpm package
+  get_url: 
+    url:   "{{ jenkins_pkg_url }}" 
+    dest:  "/var/tmp/{{ jenkins_rpm_pkg }}"
+  when: ansible_os_family|lower == 'redhat'
+
+- name: Install jenkins | RedHat
+  yum:
+    name:   "/var/tmp/{{ jenkins_rpm_pkg }}"
+    state: present
+  when: ansible_os_family|lower == 'redhat'
   register: install
 
 - name: Check jenkins home dir exists in case it is different from the default /var/lib/jenkins
   stat:
     path: "{{ jenkins_home }}"
   register: h
+
+- name: Ensure jenkins starts after install so initial password file is created
+  service: name=jenkins state=started
+  when: not h.stat.isdir|default(false) and install|changed
 
 - name: Wait for jenkins initial admin password file to be created
   wait_for: 
@@ -66,13 +74,24 @@
   when: jenkins_update_plugins
   notify: Restart jenkins
 
-- name: Create jenkins startup script default config
+- name: Create jenkins startup script default config | Debian
   template: 
     src:   etc.default.jenkins.j2
     dest:  /etc/default/jenkins
     owner: root 
     group: root 
     mode:  0644
+  when: ansible_os_family|lower == 'debian'
+  notify: Restart jenkins
+
+- name: Create jenkins startup script default config
+  template: 
+    src:   jenkins.sysconfig.j2
+    dest:  /etc/sysconfig/jenkins
+    owner: root 
+    group: root 
+    mode:  0644
+  when: ansible_os_family|lower == 'redhat'
   notify: Restart jenkins
 
 - name: Start jenkins

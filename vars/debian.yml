@@ -1,0 +1,12 @@
+---
+
+jenkins_prereq_pkgs:
+  - build-essential
+  - curl
+  - unzip
+  - git
+  - python-dev
+  - python-pip
+
+jenkins_pkg_url: "http://pkg.jenkins.io/debian-stable/binary/{{ jenkins_deb_pkg }}"
+jenkins_war_path: /usr/share/jenkins/jenkins.war

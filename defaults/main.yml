@@ -23,24 +23,30 @@ jenkins_ajp_port:       "-1"
 jenkins_java_args:      []
 jenkins_max_open_files: 8192
 
+###################################
+# RHEL: /etc/sysconfig/jenkins
+jenkins_listen_address:          ''
+jenkins_https_port:              ''
+jenkins_https_keystore:          ''
+jenkins_https_keystore_password: ''
+jenkins_https_listen_address:    ''
+jenkins_debug_level:             5
+jenkins_enable_access_log:       'no'
+jenkins_handler_max:             100
+jenkins_handler_idle:            20
 
 #####################################
 ## Package & Plugins - Jenkins Master
 #####################################
 
 jenkins_version:  "2.7.4"             # version number e.g. 2.7.4
-jenkins_prereq_pkgs:
-  - build-essential
-  - curl
-  - unzip
-  - git
-  - python-dev
-  - python-pip
 jenkins_apt_pkgs_extra: []
+jenkins_yum_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
 
 jenkins_deb_pkg: "jenkins_{{ jenkins_version|mandatory }}_all.deb"
-jenkins_pkg_url: "http://pkg.jenkins.io/debian-stable/binary/{{ jenkins_deb_pkg }}"
+jenkins_rpm_pkg: "jenkins-{{ jenkins_version|mandatory }}.noarch.rpm"
+
 jenkins_update_center_download_url: "http://updates.jenkins-ci.org/download"
 jenkins_plugins_dir:    "{{ jenkins_home }}/plugins"
 jenkins_update_plugins: true
