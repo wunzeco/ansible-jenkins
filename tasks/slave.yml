@@ -20,6 +20,7 @@
 
 - name: Install daemon package
   apt: name=daemon state=present
+  when: ansible_os_family|lower == 'debian'
 
 - name: Get jenkins slave package checksum file
   get_url:
