@@ -1,10 +1,11 @@
 require 'spec_helper'
 
-jenkins_user = 'jenkins'
-jenkins_group = jenkins_user
-jenkins_http_port = 8080
-jenkins_plugins_dir = "/var/lib/jenkins/plugins"
-jenkins_scripts_dir = '/var/lib/jenkins/scripts'
+jenkins_user        = 'jenkins'
+jenkins_group       = jenkins_user
+jenkins_http_port   = 8080
+jenkins_home_dir    = '/mnt/jenkins'
+jenkins_plugins_dir = "#{jenkins_home_dir}/plugins"
+jenkins_scripts_dir = "#{jenkins_home_dir}/scripts"
 
 jenkins_prereq_pkgs = %w( build-essential curl unzip git python-dev python-pip )
 jenkins_plugins = %w( 

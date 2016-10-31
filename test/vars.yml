@@ -29,6 +29,7 @@ jenkins_plugins:
   - "credentials"
   - "dashboard-view"
   - "delivery-pipeline-plugin"
+  - "display-url-api"
   - "durable-task"
   - "email-ext"
   - "envinject"

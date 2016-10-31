@@ -11,7 +11,7 @@
     deb:   "/var/tmp/{{ jenkins_deb_pkg }}"
     state: present
   when: ansible_os_family|lower == 'debian'
-  register: install
+  register: deb_install
 
 - name: Get jenkins rpm package
   get_url: 
@@ -24,7 +24,7 @@
     name:   "/var/tmp/{{ jenkins_rpm_pkg }}"
     state: present
   when: ansible_os_family|lower == 'redhat'
-  register: install
+  register: rpm_install
 
 - name: Check jenkins home dir exists in case it is different from the default /var/lib/jenkins
   stat:
@@ -33,12 +33,12 @@
 
 - name: Ensure jenkins starts after install so initial password file is created
   service: name=jenkins state=started
-  when: not h.stat.isdir|default(false) and install|changed
+  when: (deb_install|changed or rpm_install|changed) and not h.stat.isdir|default(false)
 
 - name: Wait for jenkins initial admin password file to be created
   wait_for: 
     path: "/var/lib/jenkins/secrets/initialAdminPassword"
-  when: not h.stat.isdir|default(false) and install|changed
+  when: (deb_install|changed or rpm_install|changed) and not h.stat.isdir|default(false)
 
 - name: Stop jenkins
   service: name=jenkins state=stopped
