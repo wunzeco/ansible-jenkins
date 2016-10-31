@@ -31,7 +31,9 @@ Install jenkins and some plugins
 
 > **Note**:
 >
->    All plugins (including their dependencies) need to be listed in the form 
+>  - Do not forget to install Java 8. See [wunzeco.java](https://github.com/wunzeco/ansible-java)
+>
+>  - All plugins (including their dependencies) need to be listed in the form 
 >    `pluginID:version` as there is no transitive dependency resolution. 
 >    However, if `version` is omitted for a plugin the latest version will be
 >    installed.
@@ -47,8 +49,8 @@ curl -sSL "http://localhost:8080/pluginManager/api/xml?depth=1&xpath=/*/*/shortN
 ## Testing
 
 ```
-cd ansible-jenkins
-kitchen verify && kitchen destroy
+PLATFORM=ubuntu                              # OR centos
+kitchen verify $PLATFORM && kitchen destroy $PLATFORM
 ```
 
 
@@ -57,4 +59,3 @@ None
 
 
 ## ToDo
-- slave install and config

@@ -4,7 +4,6 @@ jenkins_prereq_pkgs:
   - curl
   - unzip
   - git
-  - java-devel
   - python-devel
   - python-pip
   - "@Development tools"

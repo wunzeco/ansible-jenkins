@@ -13,6 +13,12 @@ jenkins_plugins = %w(
     build-pipeline-plugin claim copyartifact credentials credentials-binding
     dashboard-view delivery-pipeline-plugin plain-credentials workflow-step-api )
 
+jenkins_startup_script_config  = '/etc/default/jenkins'
+if os[:family] =~ /centos|redhat/
+  jenkins_startup_script_config  = '/etc/sysconfig/jenkins'
+  jenkins_prereq_pkgs = %w( curl unzip git python-devel python-pip )
+end
+
 jenkins_prereq_pkgs.each do |pkg|
   describe package(pkg) do
     it { should be_installed }
@@ -40,7 +46,7 @@ jenkins_plugins.each do |plugin|
   end
 end
 
-describe file('/etc/default/jenkins') do
+describe file(jenkins_startup_script_config) do
   it { should be_file }
   it { should be_mode 644 }
 end
@@ -86,16 +92,16 @@ end
 # google-chrome
 #################
 
-describe package('google-chrome-stable') do
-  it { should be_installed }
-end
-
-describe file('/usr/local/share/chromedriver') do
-  it { should be_file }
-  it { should be_mode 755 }
-end
-
-describe file('/usr/bin/chromedriver') do
-  it { should exist }
-  it { should be_symlink }
-end
+#describe package('google-chrome-stable') do
+#  it { should be_installed }
+#end
+#
+#describe file('/usr/local/share/chromedriver') do
+#  it { should be_file }
+#  it { should be_mode 755 }
+#end
+#
+#describe file('/usr/bin/chromedriver') do
+#  it { should exist }
+#  it { should be_symlink }
+#end

@@ -33,6 +33,6 @@
   include: users.yml
   when: jenkins_role == 'master'
 
-- name: google-chrome-install
-  include: google-chrome.yml
-  when: jenkins_google_chrome_install
+#- name: google-chrome-install
+#  include: google-chrome.yml
+#  when: jenkins_google_chrome_install
