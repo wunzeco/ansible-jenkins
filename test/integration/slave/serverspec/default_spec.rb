@@ -27,7 +27,6 @@ end
 describe file('/home/jenkins-slave') do
   it { should be_directory }
   it { should be_owned_by jenkins_slave_user }
-  it { should be_mode 755 }
 end
 
 describe file(jenkins_slave_startup_script_config) do
