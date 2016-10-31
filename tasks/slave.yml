@@ -39,13 +39,24 @@
     checksum: "md5:{{ chksum.stdout }}"
   notify: Restart jenkins slave
 
-- name: Create jenkins slave startup config file
+- name: Create jenkins slave startup config file | Debian
   template:
     src:    etc.default.jenkins-slave.j2
     dest:   /etc/default/jenkins-slave
     owner:  root
     group:  root
     mode:   0644
+  when: ansible_os_family|lower == 'debian'
+  notify: Restart jenkins slave
+
+- name: Create jenkins slave startup config file | RedHat
+  template:
+    src:    etc.default.jenkins-slave.j2
+    dest:   /etc/sysconfig/jenkins-slave
+    owner:  root
+    group:  root
+    mode:   0644
+  when: ansible_os_family|lower == 'redhat'
   notify: Restart jenkins slave
 
 - name: Create jenkins slave upstart script
