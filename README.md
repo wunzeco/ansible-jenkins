@@ -29,9 +29,13 @@ Install jenkins and some plugins
     - wunzeco.jenkins
 ```
 
+You may be interested in these ansible roles:
+- [wunzeco.java](https://github.com/wunzeco/ansible-java)
+- [wunzeco.google-chrome](https://github.com/wunzeco/ansible-google-chrome)
+
 > **Note**:
 >
->  - Do not forget to install Java 8. See [wunzeco.java](https://github.com/wunzeco/ansible-java)
+>  - Do not forget to install **Java 8**.
 >
 >  - All plugins (including their dependencies) need to be listed in the form 
 >    `pluginID:version` as there is no transitive dependency resolution. 
