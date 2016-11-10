@@ -33,7 +33,7 @@
 
 - name: Ensure jenkins starts after install so initial password file is created
   service: name=jenkins state=started
-  when: (deb_install|changed or rpm_install|changed) and not h.stat.isdir|default(false)
+  when: deb_install|changed or rpm_install|changed
 
 - name: Wait for jenkins initial admin password file to be created
   wait_for: 
