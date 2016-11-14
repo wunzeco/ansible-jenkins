@@ -24,11 +24,3 @@
 
 - name: Jenkins Install
   include: "{{ jenkins_role|default('master') }}.yml"
-
-- name: Jenkins CLI
-  include: cli.yml
-  when: jenkins_role == 'master'
-
-- name: UI users
-  include: users.yml
-  when: jenkins_role == 'master'

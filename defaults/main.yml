@@ -22,6 +22,7 @@ jenkins_http_port:      "8080"
 jenkins_ajp_port:       "-1"
 jenkins_java_args:      []
 jenkins_max_open_files: 8192
+jenkins_executors:      5
 
 ###################################
 # RHEL: /etc/sysconfig/jenkins
