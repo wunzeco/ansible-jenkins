@@ -19,6 +19,8 @@ if os[:family] =~ /centos|redhat/
   jenkins_prereq_pkgs = %w( curl unzip git python-devel python-pip )
 end
 
+jenkins_cli_xml = "#{jenkins_home_dir}/jenkins.CLI.xml"
+
 jenkins_prereq_pkgs.each do |pkg|
   describe package(pkg) do
     it { should be_installed }
@@ -57,6 +59,10 @@ end
 
 describe port(jenkins_http_port) do
   it { should be_listening }
+end
+
+describe file(jenkins_cli_xml) do
+	its(:content) { should match(%r{<enabled>false</enabled>}) }
 end
 
 
