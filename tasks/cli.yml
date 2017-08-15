@@ -36,4 +36,4 @@
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
     mode: 0644
-    notify: Restart jenkins
+  notify: Restart jenkins
