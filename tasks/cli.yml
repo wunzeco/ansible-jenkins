@@ -28,12 +28,3 @@
   args:
     chdir:   "{{ jenkins_helper_scripts_dir }}"
     creates: "{{ jenkins_helper_scripts_dir }}/jenkins-cli.jar"
-
-- name: Disable CLI 'remoting' option for security
-  copy:
-    src: jenkins.CLI.xml
-    dest: "{{ jenkins_home }}"
-    owner: "{{ jenkins_user }}"
-    group: "{{ jenkins_group }}"
-    mode: 0644
-  notify: Restart jenkins
