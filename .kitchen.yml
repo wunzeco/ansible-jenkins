@@ -27,4 +27,4 @@ suites:
         - ["private_network", { ip: "172.29.129.191" }]
 
 transport:
-   max_ssh_sessions: 4
+  max_ssh_sessions: 4
