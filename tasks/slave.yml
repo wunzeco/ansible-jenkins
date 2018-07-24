@@ -67,6 +67,6 @@
     group:  root
     mode:   0755
   notify: Restart jenkins slave
- 
+
 - name: Start jenkins slave
   service: name=jenkins-slave enabled=yes state=started

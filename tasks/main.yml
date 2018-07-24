@@ -23,4 +23,4 @@
   with_items: "{{ jenkins_pip_pkgs_extra }}"
 
 - name: Jenkins Install
-  include: "{{ jenkins_role|default('master') }}.yml"
+  include_tasks: "{{ jenkins_role|default('master') }}.yml"

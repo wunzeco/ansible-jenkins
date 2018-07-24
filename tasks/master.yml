@@ -98,10 +98,10 @@
   service: name=jenkins enabled=yes state=started
 
 - name: Jenkins Post Init Scripts
-  include: post-init.yml
+  include_tasks: post-init.yml
 
 - name: Jenkins CLI
-  include: cli.yml
+  include_tasks: cli.yml
 
 - name: UI users
-  include: users.yml
+  include_tasks: users.yml

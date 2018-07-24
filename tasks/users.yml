@@ -8,7 +8,7 @@
 
 - name: Set admin password
   set_fact: jenkins_admin_pass="{{ admin_pw.stdout }}"
-  when: admin_pw|success and not jenkins_admin_pass
+  when: admin_pw is success and not jenkins_admin_pass
 
 - name: Create jenkins slave ui user
   shell: >
@@ -23,7 +23,7 @@
   args:
     chdir: "{{ jenkins_helper_scripts_dir }}"
   when: jenkins_create_slave_ui_user
-        
+
 - name: Grant matrix authorization strategy permissions to jenkins slave ui user
   shell: >
       java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }}/jenkins \
@@ -32,7 +32,7 @@
         global_read \
         slave_build \
         slave_connect \
-        slave_configure \ 
+        slave_configure \
         slave_create \
         slave_delete \
         slave_disconnect \
@@ -42,8 +42,8 @@
     chdir: "{{ jenkins_helper_scripts_dir }}"
   when: jenkins_create_slave_ui_user
 
-## Note: Conscious decision made not to create other UI users based on the 
-##       assumption that users will be allowed to sign up on Jenkins UI. The 
+## Note: Conscious decision made not to create other UI users based on the
+##       assumption that users will be allowed to sign up on Jenkins UI. The
 ##       reason for this is to allow users manage their passwords.
 - name: Grant matrix authorization strategy permissions to other jenkins ui users
   shell: >
