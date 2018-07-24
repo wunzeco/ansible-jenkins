@@ -1,8 +1,8 @@
 ---
 
 - name: Get jenkins debian package
-  get_url: 
-    url:   "{{ jenkins_pkg_url }}" 
+  get_url:
+    url:   "{{ jenkins_pkg_url }}"
     dest:  "/var/tmp/{{ jenkins_deb_pkg }}"
   when: ansible_os_family|lower == 'debian'
 
@@ -14,8 +14,8 @@
   register: deb_install
 
 - name: Get jenkins rpm package
-  get_url: 
-    url:   "{{ jenkins_pkg_url }}" 
+  get_url:
+    url:   "{{ jenkins_pkg_url }}"
     dest:  "/var/tmp/{{ jenkins_rpm_pkg }}"
   when: ansible_os_family|lower == 'redhat'
 
@@ -33,12 +33,12 @@
 
 - name: Ensure jenkins starts after install so initial password file is created
   service: name=jenkins state=started
-  when: deb_install|changed or rpm_install|changed
+  when: deb_install is changed or rpm_install is changed
 
 - name: Wait for jenkins initial admin password file to be created
-  wait_for: 
+  wait_for:
     path: "/var/lib/jenkins/secrets/initialAdminPassword"
-  when: (deb_install|changed or rpm_install|changed) and not h.stat.isdir|default(false)
+  when: (deb_install is changed or rpm_install is changed) and not h.stat.isdir|default(false)
 
 - name: Stop jenkins
   service: name=jenkins state=stopped
@@ -56,16 +56,16 @@
   when: not h.stat.isdir|default(false)
 
 - name: Create jenkins plugins directory
-  file: 
+  file:
     path:  "{{ jenkins_plugins_dir }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
     mode:  0755
-    state: directory 
+    state: directory
 
 - name: Install jenkins plugins
-  get_url: 
-    url:   "{{ jenkins_update_center_download_url }}/plugins/{{ item.split(':')[0] }}/{{ item.split(':')[1]|default('latest') }}/{{ item.split(':')[0] }}.hpi" 
+  get_url:
+    url:   "{{ jenkins_update_center_download_url }}/plugins/{{ item.split(':')[0] }}/{{ item.split(':')[1]|default('latest') }}/{{ item.split(':')[0] }}.hpi"
     dest:  "{{ jenkins_plugins_dir }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
@@ -75,21 +75,21 @@
   notify: Restart jenkins
 
 - name: Create jenkins startup script default config | Debian
-  template: 
+  template:
     src:   etc.default.jenkins.j2
     dest:  /etc/default/jenkins
-    owner: root 
-    group: root 
+    owner: root
+    group: root
     mode:  0644
   when: ansible_os_family|lower == 'debian'
   notify: Restart jenkins
 
 - name: Create jenkins startup script default config
-  template: 
+  template:
     src:   jenkins.sysconfig.j2
     dest:  /etc/sysconfig/jenkins
-    owner: root 
-    group: root 
+    owner: root
+    group: root
     mode:  0644
   when: ansible_os_family|lower == 'redhat'
   notify: Restart jenkins

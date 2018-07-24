@@ -21,7 +21,7 @@
     - set_slave_agent_port.groovy
   notify: Restart jenkins
 
-# Trigger any pending restart handlers now so that post-init scripts can run 
+# Trigger any pending restart handlers now so that post-init scripts can run
 # after Jenkins starts up. This is necessary for jenkins-cli commands to work
 - meta: flush_handlers
 

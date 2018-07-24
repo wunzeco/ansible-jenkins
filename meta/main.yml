@@ -12,8 +12,9 @@ galaxy_info:
       versions:
         - precise
         - trusty
+        - xenial
   galaxy_tags:
     - jenkins
     - ci
 dependencies: []
-  
+
