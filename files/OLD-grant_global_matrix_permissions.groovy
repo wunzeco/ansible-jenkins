@@ -44,33 +44,43 @@ valid_perms_map = [
    view_delete:                  hudson.model.View.DELETE,
 ]
 
-def grant_global_matrix_permissions(String user, List permissions) {
-    def instance = Jenkins.getInstance()
+def instance = Jenkins.getInstance()
 
-    def hudsonRealm = new HudsonPrivateSecurityRealm(true)
-    instance.setSecurityRealm(hudsonRealm)
+def hudsonRealm = new HudsonPrivateSecurityRealm(true)
+instance.setSecurityRealm(hudsonRealm)
 
-    def gmas = instance.getAuthorizationStrategy()
+def gmas = instance.getAuthorizationStrategy()
 
-    //println "${gmas instanceof GlobalMatrixAuthorizationStrategy}"
+//println "${gmas instanceof GlobalMatrixAuthorizationStrategy}"
 
-    if( !(gmas instanceof GlobalMatrixAuthorizationStrategy) ) {
-       gmas = new hudson.security.GlobalMatrixAuthorizationStrategy()
-    }
-
-    // Ensure admin user has ADMINISTER permission
-    gmas.add(Jenkins.ADMINISTER,'admin')
-
-    permissions.each { p ->
-        if( !valid_perms_map.containsKey(p) )
-            throw new RuntimeException("Invalid permission ** ${p} ** \nValid permissions: ${valid_perms_map.keySet()}")
-
-        //println "${user} =>> ${valid_perms_map[p]}"
-        gmas.add(valid_perms_map[p], user)
-    }
-
-    instance.setAuthorizationStrategy(gmas)
-
-    instance.save()
+if( !(gmas instanceof GlobalMatrixAuthorizationStrategy) ) {
+   gmas = new hudson.security.GlobalMatrixAuthorizationStrategy()
+    // Ensure granted permissions for other users are preserved
+    //gmas.grantedPermissions.each { permission, sids ->
+    //    println "$permission -> $sids"
+    //    sids.each { sid ->
+    //        if( sid != args[0])
+    //            strategy.add(permission, sid)
+    //    }
+    //}
 }
 
+// Ensure admin user has ADMINISTER permission
+gmas.add(Jenkins.ADMINISTER,'admin')
+
+
+def args = getBinding().args
+
+def user = args[0]
+permissions = args[1..-1]
+permissions.each { p ->
+    if( !valid_perms_map.containsKey(p) )
+        throw new RuntimeException("Invalid permission ** ${p} ** \nValid permissions: ${valid_perms_map.keySet()}")
+
+    //println "${user} =>> ${valid_perms_map[p]}"
+    gmas.add(valid_perms_map[p], user)
+}
+
+instance.setAuthorizationStrategy(gmas)
+
+instance.save()

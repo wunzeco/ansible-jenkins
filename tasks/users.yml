@@ -10,49 +10,54 @@
   set_fact: jenkins_admin_pass="{{ admin_pw.stdout }}"
   when: admin_pw is success and not jenkins_admin_pass
 
+# As of Jenkins v2.121.3, setting "-Djenkins.install.runSetupWizard=false" flag
+# in JAVA_ARGS did not disable running of setup wizard as expected. Hence, the
+# workaround below.
+- name: Fix a defect to disable setup wizard
+  jenkins_script:
+    script: |
+      import static jenkins.model.Jenkins.instance as jenkins
+      import jenkins.install.InstallState
+      if (!jenkins.installState.isSetupComplete()) {
+        InstallState.INITIAL_SETUP_COMPLETED.initializeState()
+      }
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_pass }}"
+  when: "-Djenkins.install.runSetupWizard=false" in jenkins_java_args
+
 - name: Create jenkins slave ui user
-  shell: >
-      java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }}/jenkins \
-        groovy {{ jenkins_helper_scripts_dir }}/cli_helper.groovy create_or_update_user \
-        {{ jenkins_slave_ui_user }} \
-        {{ jenkins_slave_ui_user_email }} \
-        {{ jenkins_slave_ui_pass }} \
-        "{{ jenkins_slave_ui_fullname|default('slave - Managed by Ansible') }}" \
-        --username {{ jenkins_admin_user }} \
-        --password {{ jenkins_admin_pass }}
-  args:
-    chdir: "{{ jenkins_helper_scripts_dir }}"
-  when: jenkins_create_slave_ui_user
+  jenkins_script:
+    script: |
+      {{ lookup('file', 'create_or_update_user.groovy') }}
+      create_or_update_user("{{ jenkins_slave_ui_user }}", "{{ jenkins_slave_ui_user_email }}", "{{ jenkins_slave_ui_pass }}", "{{ jenkins_slave_ui_fullname|default('slave - Managed by Ansible') }}")
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_pass }}"
 
 - name: Grant matrix authorization strategy permissions to jenkins slave ui user
-  shell: >
-      java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }}/jenkins \
-        groovy {{ jenkins_helper_scripts_dir }}/grant_global_matrix_permissions.groovy \
-        {{ jenkins_slave_ui_user }} \
-        global_read \
-        slave_build \
-        slave_connect \
-        slave_configure \
-        slave_create \
-        slave_delete \
-        slave_disconnect \
-        --username {{ jenkins_admin_user }} \
-        --password {{ jenkins_admin_pass }}
-  args:
-    chdir: "{{ jenkins_helper_scripts_dir }}"
-  when: jenkins_create_slave_ui_user
+  jenkins_script:
+    script: |
+      {{ lookup('file', 'grant_global_matrix_permissions.groovy') }}
+      grant_global_matrix_permissions("{{ jenkins_slave_ui_user }}",
+                                      ["global_read",
+                                       "slave_build",
+                                       "slave_connect",
+                                       "slave_configure",
+                                       "slave_create",
+                                       "slave_delete",
+                                       "slave_disconnect"])
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_pass }}"
+  with_items: "{{ jenkins_ui_users }}"
 
 ## Note: Conscious decision made not to create other UI users based on the
 ##       assumption that users will be allowed to sign up on Jenkins UI. The
 ##       reason for this is to allow users manage their passwords.
 - name: Grant matrix authorization strategy permissions to other jenkins ui users
-  shell: >
-      java -jar jenkins-cli.jar -s http://localhost:{{ jenkins_http_port }}/jenkins \
-        groovy {{ jenkins_helper_scripts_dir }}/grant_global_matrix_permissions.groovy \
-        {{ item.username }} \
-        {{ item.permissions|join(' ') }} \
-        --username {{ jenkins_admin_user }} \
-        --password {{ jenkins_admin_pass }}
-  args:
-    chdir: "{{ jenkins_helper_scripts_dir }}"
+  jenkins_script:
+    script: |
+      {{ lookup('file', 'grant_global_matrix_permissions.groovy') }}
+      grant_global_matrix_permissions("{{ item.username }}", ["{{ item.permissions|join('", "') }}"])
+      println("AWESOME")
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_pass }}"
   with_items: "{{ jenkins_ui_users }}"

@@ -8,17 +8,6 @@
     mode:  0755
     state: directory
 
-- name: Copy jenkins config helper scripts
-  copy:
-    src:   "{{ item }}"
-    dest:  "{{ jenkins_helper_scripts_dir }}"
-    owner: "{{ jenkins_user }}"
-    group: "{{ jenkins_group }}"
-    mode:  0644
-  with_items:
-    - cli_helper.groovy
-    - grant_global_matrix_permissions.groovy
-
 - name: Extract jenkins-cli.jar
   shell: >
       jar -xf {{ jenkins_war_path }} WEB-INF/jenkins-cli.jar &&
