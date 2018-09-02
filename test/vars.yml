@@ -98,11 +98,11 @@ jenkins_plugins:
   - "workflow-support"
   - "ws-cleanup"
 
-jenkins_permissions_developer: [ 
-      global_read, global_run_scripts, job_build, job_cancel, job_configure,
-      job_create, job_delete, job_discover, job_read, job_workspace, 
-      run_delete, run_update, view_read, view_configure, view_create, 
-      view_delete 
+jenkins_permissions_developer: [
+      global_read, job_build, job_cancel, job_configure,
+      job_create, job_delete, job_discover, job_read, job_workspace,
+      run_delete, run_update, view_read, view_configure, view_create,
+      view_delete
       ]
 jenkins_ui_users:
   - username: ogonna
