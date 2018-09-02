@@ -23,7 +23,7 @@
       }
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
-  when: "-Djenkins.install.runSetupWizard=false" in jenkins_java_args
+  when: "'-Djenkins.install.runSetupWizard=false' in jenkins_java_args"
 
 - name: Create jenkins slave ui user
   jenkins_script:
