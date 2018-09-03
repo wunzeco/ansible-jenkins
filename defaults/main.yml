@@ -40,7 +40,7 @@ jenkins_handler_idle:            20
 ## Package & Plugins - Jenkins Master
 #####################################
 
-jenkins_version:  "2.60.2"             # version number e.g. 2.60.2
+jenkins_version:  "2.121.3"             # version number e.g. 2.60.2
 jenkins_apt_pkgs_extra: []
 jenkins_yum_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
@@ -65,8 +65,8 @@ jenkins_slave_user:    jenkins-slave
 jenkins_slave_group:   "{{ jenkins_slave_user }}"
 jenkins_slave_home:    /home/{{ jenkins_slave_user }}
 
-jenkins_slave_version: 2.1
-jenkins_slave_jar:     "swarm-client-{{ jenkins_slave_version }}-jar-with-dependencies.jar"
+jenkins_slave_version: 3.13
+jenkins_slave_jar:     "swarm-client-{{ jenkins_slave_version }}.jar"
 jenkins_slave_jar_url: "http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ jenkins_slave_version }}/{{ jenkins_slave_jar }}"
 jenkins_slave_checksum_file: "{{ jenkins_slave_jar }}.md5"
 jenkins_slave_checksum_file_url: "{{ jenkins_slave_jar_url }}.md5"
@@ -83,8 +83,8 @@ jenkins_slave_mode:           normal
 jenkins_slave_name:           ''
 jenkins_slave_extra_args:     [ '-disableSslVerification' ]
 jenkins_slave_description:    ''
-jenkins_slave_tool_locations: []      
-#jenkins_slave_tool_locations: 
+jenkins_slave_tool_locations: []
+#jenkins_slave_tool_locations:
 #  - name: aTool
 #    location: /path/to/tool
 jenkins_slave_auto_discovery_address: ''
@@ -96,12 +96,12 @@ jenkins_slave_auto_discovery_address: ''
 
 jenkins_ui_users: []
 
-## Note: Conscious decision made not to create other UI users based on the 
-##       assumption that users will be allowed to sign up on Jenkins UI. The 
+## Note: Conscious decision made not to create other UI users based on the
+##       assumption that users will be allowed to sign up on Jenkins UI. The
 ##       reason for this is to allow users manage their passwords.
 ##
 ##       For valid permissions values for granting Global Matrix permissions see
-##       script in this role at files/grant_global_matrix_permissions.groovy 
+##       script in this role at files/grant_global_matrix_permissions.groovy
 ##
 ## jenkins_ui_users:
 ##   - username:
@@ -110,7 +110,7 @@ jenkins_ui_users: []
 
 
 ###########
-## Example 
+## Example
 ##    Note: Plugin version NOT specified implies "latest". So latest version of
 ##          that plugin will be installed.
 ##

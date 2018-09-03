@@ -50,7 +50,7 @@ jenkins_plugins:
   - "htmlpublisher"
   - "icon-shim"
   - "javadoc"
-  - "job-dsl:1.48"
+  - "job-dsl"
   - "jquery-detached"
   - "jquery"
   - "junit"
