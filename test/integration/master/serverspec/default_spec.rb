@@ -70,16 +70,10 @@ describe file(jenkins_scripts_dir) do
   it { should be_mode 755 }
 end
 
-%w(
-  jenkins-cli.jar
-  cli_helper.groovy
-  grant_global_matrix_permissions.groovy
-).each do |f|
-  describe file("#{jenkins_scripts_dir}/#{f}") do
-    it { should be_file }
-    it { should be_owned_by jenkins_user }
-    it { should be_mode 644 }
-  end
+describe file("#{jenkins_scripts_dir}/jenkins-cli.jar") do
+  it { should be_file }
+  it { should be_owned_by jenkins_user }
+  it { should be_mode 644 }
 end
 
 ###################
