@@ -105,3 +105,28 @@
 
 - name: UI users
   include_tasks: users.yml
+
+- name: Create NVD directory
+  file:
+    path: "{{ jenkins_slave_home }}/nvd/"
+    owner: "{{ jenkins_slave_user }}"
+    group: "{{ jenkins_slave_group }}"
+    state: directory
+
+- name: Start NVD mirror container
+  docker_container:
+    image: "sspringett/nvdmirror"
+    name: "mirror"
+    keep_volumes: yes
+    recreate: no
+    log_driver: json-file
+    log_options:
+      max-size: "200M"
+      max-file: "1"
+    published_ports: "80:80"
+    volumes: "{{ jenkins_home }}/nvd/:/tmp/nvd/"
+    restart_policy: "on-failure"
+    restart_retries: 3
+    state: started
+  retries: 3
+  delay: 30
