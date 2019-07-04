@@ -1,0 +1,11 @@
+import org.jenkinsci.plugins.scriptsecurity.scripts.*
+
+def signatures = [
+    'staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods drop java.util.Map int',
+    'staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods take java.util.Map int',
+    'staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods use java.lang.Object java.lang.Class groovy.lang.Closure'
+]
+
+for (sig in signatures) {
+    ScriptApproval.get().approveSignature(sig)
+}

@@ -108,9 +108,9 @@
 
 - name: Create NVD directory
   file:
-    path: "{{ jenkins_slave_home }}/nvd/"
-    owner: "{{ jenkins_slave_user }}"
-    group: "{{ jenkins_slave_group }}"
+    path: "{{ jenkins_home }}/nvd/"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
     state: directory
 
 - name: Start NVD mirror container
