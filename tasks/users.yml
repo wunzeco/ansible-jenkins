@@ -48,6 +48,7 @@
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
   with_items: "{{ jenkins_ui_users }}"
+  no_log: false
 
 ## Note: Conscious decision made not to create other UI users based on the
 ##       assumption that users will be allowed to sign up on Jenkins UI. The
@@ -61,3 +62,4 @@
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
   with_items: "{{ jenkins_ui_users }}"
+  no_log: false

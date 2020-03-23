@@ -10,5 +10,6 @@
     - roles/ansible-jenkins/test/{{ ansible_os_family|lower }}.yml
 
   roles:
-    - wunzeco.java
+    - o2-priority.java
+    - o2-priority.docker
     - ansible-jenkins
