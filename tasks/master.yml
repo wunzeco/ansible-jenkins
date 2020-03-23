@@ -9,7 +9,7 @@
 - name: Install jenkins | Debian
   apt:
     deb:   "/var/tmp/{{ jenkins_deb_pkg }}"
-    state: present
+    state: "{{ jenkins_package_state }}"
   when: ansible_os_family|lower == 'debian'
   register: deb_install
 
@@ -22,7 +22,7 @@
 - name: Install jenkins | RedHat
   yum:
     name:   "/var/tmp/{{ jenkins_rpm_pkg }}"
-    state: present
+    state: "{{ jenkins_package_state }}"
   when: ansible_os_family|lower == 'redhat'
   register: rpm_install
 

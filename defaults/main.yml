@@ -10,6 +10,8 @@ jenkins_admin_pass:
 jenkins_helper_scripts_dir:    "{{ jenkins_home }}/scripts"
 jenkins_post_init_scripts_dir: "{{ jenkins_home }}/init.groovy.d"
 
+jenkins_package_state: present
+
 ###########################
 ## Config - Jenkins Master
 ###########################
@@ -40,7 +42,7 @@ jenkins_handler_idle:            20
 ## Package & Plugins - Jenkins Master
 #####################################
 
-jenkins_version:  "2.121.3"             # version number e.g. 2.60.2
+jenkins_version:  "2.204.5"             # version number e.g. 2.60.2
 jenkins_apt_pkgs_extra: []
 jenkins_yum_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
