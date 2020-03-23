@@ -1,4 +1,4 @@
-require 'spec_helper'
+require '/tmp/kitchen/spec/spec_helper.rb'
 
 jenkins_slave_user = 'jenkins-slave'
 jenkins_slave_group = jenkins_slave_user
