@@ -8,20 +8,12 @@
     mode:  0755
     state: directory
 
-# - name: Extract Jenkins-cli
-#   get_url:
-#     url:   "http://localhost:8080/jnlpJars/jenkins-cli.jar"
-#     dest:  "{{ jenkins_helper_scripts_dir }}"
-#     owner: "{{ jenkins_user }}"
-#     group: "{{ jenkins_group }}"
-#     mode:  0644
-
-# - name: Extract jenkins-cli.jar
-#   shell: >
-#       jar -xf {{ jenkins_war_path }} WEB-INF/jenkins-cli.jar &&
-#           mv WEB-INF/jenkins-cli.jar ./ &&
-#           rm -rf WEB-INF &&
-#           chown {{ jenkins_user }}: jenkins-cli.jar
-#   args:
-#     chdir:   "{{ jenkins_helper_scripts_dir }}"
-#     creates: "{{ jenkins_helper_scripts_dir }}/jenkins-cli.jar"
+# With the current version of jenkins,jenkins-cli.jar is no longer shipped through jenkins.war.
+# https://wiki.jenkins.io/display/JENKINS/Jenkins+CLI
+- name: Extract Jenkins-cli
+  get_url:
+    url:   "http://localhost:8080/jnlpJars/jenkins-cli.jar"
+    dest:  "{{ jenkins_helper_scripts_dir }}"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    mode:  0644
