@@ -63,6 +63,18 @@
     mode:  0755
     state: directory
 
+- name: Find already installed plugins with *.jpi
+  find:
+    paths: "{{ jenkins_plugins_dir }}"
+    patterns: "*.jpi"
+  register: plugins_with_jpi
+
+- name: Rename *.jpi to *.hpi before updating the jenkins plugins
+  copy:
+    src: "{{jenkins_plugins_dir}}/*.jpi"
+    copy: "{{jenkins_plugins_dir}}/*.hpi"
+  when: plugins_with_jpi.matched > 0
+
 - name: Install jenkins plugins
   get_url:
     url:   "{{ jenkins_update_center_download_url }}/plugins/{{ item.split(':')[0] }}/{{ item.split(':')[1]|default('latest') }}/{{ item.split(':')[0] }}.hpi"
