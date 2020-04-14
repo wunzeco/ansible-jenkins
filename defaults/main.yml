@@ -42,7 +42,7 @@ jenkins_handler_idle:            20
 ## Package & Plugins - Jenkins Master
 #####################################
 
-jenkins_version:  "2.204.5"             # version number e.g. 2.60.2
+jenkins_version:  "2.222.1"             # version number e.g. 2.60.2
 jenkins_apt_pkgs_extra: []
 jenkins_yum_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
