@@ -2,7 +2,7 @@
 
 - name: Get jenkins admin password
   shell: >
-      cat {{ jenkins_home }}/secrets/initialAdminPassword || true
+      cat /var/lib/jenkins/secrets/initialAdminPassword || true
   # when: not jenkins_admin_pass|default(false)
   register: admin_pw
 
