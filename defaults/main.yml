@@ -20,7 +20,7 @@ jenkins_package_state: present
 jenkins_args:
   - "--webroot=/var/cache/$NAME/war"
   - "--httpPort=$HTTP_PORT"
-jenkins_http_port:      "8080"
+jenkins_http_port:      "8081"
 jenkins_ajp_port:       "-1"
 jenkins_java_args:      []
 jenkins_max_open_files: 8192

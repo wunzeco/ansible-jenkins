@@ -12,7 +12,7 @@
 # https://wiki.jenkins.io/display/JENKINS/Jenkins+CLI
 - name: Extract Jenkins-cli
   get_url:
-    url:   "http://localhost:8080/jnlpJars/jenkins-cli.jar"
+    url:   "http://localhost:8081/jnlpJars/jenkins-cli.jar"
     dest:  "{{ jenkins_helper_scripts_dir }}"
     owner: "{{ jenkins_user }}"
     group: "{{ jenkins_group }}"
