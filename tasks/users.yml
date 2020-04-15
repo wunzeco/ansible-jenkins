@@ -6,13 +6,16 @@
   when: not jenkins_admin_pass|default(false)
   register: admin_pw
 
-- debug:
-    var: admin_pw.stdout
+
 
 
 - name: Set admin password
   set_fact: jenkins_admin_pass="{{ admin_pw.stdout }}"
   when: admin_pw is success and not jenkins_admin_pass
+
+- debug:
+    msg:
+    - "The jenkins admin password is : {{ jenkins_admin_pass }}"
 
 # As of Jenkins v2.121.3, setting "-Djenkins.install.runSetupWizard=false" flag
 # in JAVA_ARGS did not disable running of setup wizard as expected. Hence, the
