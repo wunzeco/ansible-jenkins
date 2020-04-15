@@ -115,8 +115,8 @@
 - name: Jenkins CLI
   include_tasks: cli.yml
 
-- name: UI users
-  include_tasks: users.yml
+# - name: UI users
+#   include_tasks: users.yml
 
 - name: Create NVD directory
   file:

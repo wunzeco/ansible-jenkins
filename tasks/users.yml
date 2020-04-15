@@ -8,7 +8,7 @@
 
 - debug:
     var: admin_pw.stdout
-    verbosity: 2
+
 
 - name: Set admin password
   set_fact: jenkins_admin_pass="{{ admin_pw.stdout }}"
