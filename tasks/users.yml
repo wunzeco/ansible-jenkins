@@ -6,6 +6,10 @@
   when: not jenkins_admin_pass|default(false)
   register: admin_pw
 
+- debug:
+    var: admin_pw.stdout
+    verbosity: 2
+
 - name: Set admin password
   set_fact: jenkins_admin_pass="{{ admin_pw.stdout }}"
   when: admin_pw is success and not jenkins_admin_pass
@@ -24,6 +28,7 @@
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
   when: "'-Djenkins.install.runSetupWizard=false' in jenkins_java_args"
+  no_log: false
 
 - name: Create jenkins slave ui user
   jenkins_script:
@@ -32,7 +37,7 @@
       create_or_update_user("{{ jenkins_slave_ui_user }}", "{{ jenkins_slave_ui_user_email }}", "{{ jenkins_slave_ui_pass }}", "{{ jenkins_slave_ui_fullname|default('slave - Managed by Ansible') }}")
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
-
+  no_log: false
 - name: Grant matrix authorization strategy permissions to jenkins slave ui user
   jenkins_script:
     script: |
@@ -48,7 +53,7 @@
     user: "{{ jenkins_admin_user }}"
     password: "{{ jenkins_admin_pass }}"
   with_items: "{{ jenkins_ui_users }}"
-
+  no_log: false
 
 ## Note: Conscious decision made not to create other UI users based on the
 ##       assumption that users will be allowed to sign up on Jenkins UI. The
