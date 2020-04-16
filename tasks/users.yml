@@ -3,13 +3,13 @@
 - name: Get jenkins admin password
   shell: >
       cat /var/lib/jenkins/secrets/initialAdminPassword || true
-  # when: not jenkins_admin_pass|default(false)
+  when: not jenkins_admin_pass|default(false)
   register: admin_pw
 
 
 - name: Set admin password
   set_fact: jenkins_admin_pass="{{ admin_pw.stdout }}"
-  # when: admin_pw is success and not jenkins_admin_pass
+  when: admin_pw is success and not jenkins_admin_pass
 
 - debug:
     msg:
