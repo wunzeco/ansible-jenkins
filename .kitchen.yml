@@ -11,7 +11,7 @@ provisioner:
   requirements_path: requirements.yml
   ansible_version: 2.4.3.0
   ansible_verbose: false
-  ansible_verbosity: 2
+  ansible_verbosity: 4
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   ignore_paths_from_root:
     - .kitchen
