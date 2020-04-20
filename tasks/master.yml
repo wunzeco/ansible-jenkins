@@ -67,7 +67,7 @@
   find:
     paths: "{{ jenkins_plugins_dir }}"
     patterns: "*.jpi"
-  register: plugins_with_jpi
+    register: plugins_with_jpi
 
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
   copy:
