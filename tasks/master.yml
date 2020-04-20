@@ -83,10 +83,9 @@
 #   when: "{{ plugins_with_jpi.matched }} > 0"
 
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
-  command: mv *.jpi *.hpi
-  args:
-    chdir: "{{ jenkins_plugins_dir }}"
-  when: "{{ plugins_with_jpi.matched }} > 0"
+  command: "mv {{ jenkins_plugins_dir }}/*.jpi  {{ jenkins_plugins_dir }}/*.hpi"
+  become: yes
+  when:  plugins_with_jpi.matched > 0
 
 
 
