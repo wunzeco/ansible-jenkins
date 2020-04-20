@@ -80,10 +80,10 @@
   copy:
     src: "{{ item }}"
     dest: "{{ item | regex_replace('.jpi') }}.hpi"
-    remote_src: true
-  with_fileglob:
-    - "{{jenkins_plugins_dir}}/*.jpi"
-  when: "{{ plugins_with_jpi.matched }} > 0"
+    remote_src: yes
+  with_items:
+    - "{{ plugins_with_jpi.files.path }}"
+
 
 
 - name: Install jenkins plugins
