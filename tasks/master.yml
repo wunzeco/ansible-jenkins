@@ -72,7 +72,7 @@
 - name: print the number of *jpi's
   debug:
     msg:
-      - "{{plugins_with_jpi.files.path}}"
+      - "{{plugins_with_jpi.files}}"
       - "{{plugins_with_jpi.matched}}"
 
 
