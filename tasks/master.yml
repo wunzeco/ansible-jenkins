@@ -72,17 +72,17 @@
 - name: print the number of *jpi's
   debug:
     msg:
-      - "{{plugins_with_jpi.files}}"
+      - "{{plugins_with_jpi.files.path}}"
       - "{{plugins_with_jpi.matched}}"
 
 
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
   copy:
-    src: "{{ item }}"
-    dest: "{{ item | regex_replace('.jpi') }}.hpi"
+    src: "{{ item.path }}"
+    dest: "{{ item.path | regex_replace('.jpi') }}.hpi"
     remote_src: yes
   with_items:
-    - "{{ plugins_with_jpi.files.path }}"
+    - "{{ plugins_with_jpi.files }}"
 
 
 
