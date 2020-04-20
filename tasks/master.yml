@@ -84,6 +84,12 @@
   with_items:
     - "{{ plugins_with_jpi.files }}"
 
+- name: Rename *.jpi to *.hpi before updating the jenkins plugins
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ plugins_with_jpi.files }}"
 
 
 - name: Install jenkins plugins
