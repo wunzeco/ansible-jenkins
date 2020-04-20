@@ -72,7 +72,7 @@
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
   copy:
     src: "{{jenkins_plugins_dir}}/*.jpi"
-    copy: "{{jenkins_plugins_dir}}/*.hpi"
+    dest: "{{jenkins_plugins_dir}}/*.hpi"
   when: plugins_with_jpi.matched > 0
 
 - name: Install jenkins plugins
