@@ -71,7 +71,9 @@
 
 - name: print the number of *jpi's
   debug:
-    msg: "{{plugins_with_jpi.matched}}"
+    msg:
+      - "{{plugins_with_jpi.files}}"
+      - "{{plugins_with_jpi.matched}}"
 
 
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
