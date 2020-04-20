@@ -67,13 +67,13 @@
   find:
     paths: "{{ jenkins_plugins_dir }}"
     patterns: "*.jpi"
-    register: plugins_with_jpi
+  register: plugins_with_jpi
 
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
   copy:
     src: "{{jenkins_plugins_dir}}/*.jpi"
     dest: "{{jenkins_plugins_dir}}/*.hpi"
-  when: plugins_with_jpi.matched > 0
+  when: {{ plugins_with_jpi.matched }} > 0
 
 - name: Install jenkins plugins
   get_url:
