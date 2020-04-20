@@ -81,14 +81,8 @@
     src: "{{ item }}"
     dest: "{{ item | regex_replace('.jpi') }}.hpi"
   with_fileglob:
-    - "{{jenkins_plugins_dir}}/*.jpi"
+    - "{{jenkins_plugins_dir}}/*"
   when: "{{ plugins_with_jpi.matched }} > 0"
-
-# - name: Rename *.jpi to *.hpi before updating the jenkins plugins
-#   command: "mv {{ jenkins_plugins_dir }}/*.jpi  {{ jenkins_plugins_dir }}/*.hpi"
-#   become: yes
-#   when:  plugins_with_jpi.matched > 0
-
 
 
 - name: Install jenkins plugins
