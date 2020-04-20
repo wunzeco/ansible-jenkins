@@ -69,11 +69,16 @@
     patterns: "*.jpi"
   register: plugins_with_jpi
 
+- name: print the number of *jpi's
+  debug:
+    msg: "{{plugins_with_jpi.matched}}"
+
+
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
   copy:
     src: "{{jenkins_plugins_dir}}/*.jpi"
     dest: "{{jenkins_plugins_dir}}/*.hpi"
-  when: "{{ plugins_with_jpi.matched }}" > 0
+  when: "{{ plugins_with_jpi.matched }} > 0"
 
 - name: Install jenkins plugins
   get_url:
