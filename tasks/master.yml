@@ -79,7 +79,7 @@
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
   copy:
     src: "{{ item }}"
-    dest: "{{jenkins_plugins_dir}}/*.hpi"
+    dest: "{{ item | regex_replace('.jpi') }}.hpi"
   with_fileglob: "{{jenkins_plugins_dir}}/*.jpi"
   when: "{{ plugins_with_jpi.matched }} > 0"
 
