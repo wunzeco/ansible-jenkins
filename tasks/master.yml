@@ -76,16 +76,17 @@
       - "{{plugins_with_jpi.matched}}"
 
 
-# - name: Rename *.jpi to *.hpi before updating the jenkins plugins
-#   copy:
-#     src: "{{jenkins_plugins_dir}}/*.jpi"
-#     dest: "{{jenkins_plugins_dir}}/*.hpi"
-#   when: "{{ plugins_with_jpi.matched }} > 0"
-
 - name: Rename *.jpi to *.hpi before updating the jenkins plugins
-  command: "mv {{ jenkins_plugins_dir }}/*.jpi  {{ jenkins_plugins_dir }}/*.hpi"
-  become: yes
-  when:  plugins_with_jpi.matched > 0
+  copy:
+    src: "{{ item }}"
+    dest: "{{jenkins_plugins_dir}}/*.hpi"
+  with_fileglob: "{{jenkins_plugins_dir}}/*.jpi"
+  when: "{{ plugins_with_jpi.matched }} > 0"
+
+# - name: Rename *.jpi to *.hpi before updating the jenkins plugins
+#   command: "mv {{ jenkins_plugins_dir }}/*.jpi  {{ jenkins_plugins_dir }}/*.hpi"
+#   become: yes
+#   when:  plugins_with_jpi.matched > 0
 
 
 
