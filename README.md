@@ -5,7 +5,7 @@ Ansible role to install and configure Jenkins master and slave.
 
 
 ## Example
- 
+
 Install jenkins and some plugins
 
 ```
@@ -26,19 +26,19 @@ Install jenkins and some plugins
       - 'delivery-pipeline-plugin:0.9.9'  
 
   roles:
-    - wunzeco.jenkins
+    - ansible-jenkins
 ```
 
 You may be interested in these ansible roles:
-- [wunzeco.java](https://github.com/wunzeco/ansible-java)
-- [wunzeco.google-chrome](https://github.com/wunzeco/ansible-google-chrome)
+https://github.com/o2-priority/ansible-java
+https://github.com/o2-priority/ansible-docker
 
 > **Note**:
 >
 >  - Do not forget to install **Java 8**.
 >
->  - All plugins (including their dependencies) need to be listed in the form 
->    `pluginID:version` as there is no transitive dependency resolution. 
+>  - All plugins (including their dependencies) need to be listed in the form
+>    `pluginID:version` as there is no transitive dependency resolution.
 >    However, if `version` is omitted for a plugin the latest version will be
 >    installed.
 
