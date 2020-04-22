@@ -11,5 +11,5 @@
 
   roles:
     - o2-priority.java
-    # - o2-priority.docker
+    - o2-priority.docker
     - ansible-jenkins

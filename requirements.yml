@@ -4,6 +4,6 @@
   name: o2-priority.java
 
 - src: git@github.com:o2-priority/ansible-docker.git
-  version: master
+  version: jenkins-upgrade
   scm: git
   name: o2-priority.docker
