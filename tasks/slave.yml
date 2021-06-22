@@ -22,21 +22,21 @@
   apt: name=daemon state=present
   when: ansible_os_family|lower == 'debian'
 
-- name: Get jenkins slave package checksum file
-  get_url:
-    url:  "{{ jenkins_slave_checksum_file_url }}"
-    dest: "{{ jenkins_slave_home }}"
-
-- name: Get checksum of jenkins slave package
-  shell: >
-      cat {{ jenkins_slave_home }}/{{ jenkins_slave_checksum_file }}
-  register: chksum
+#- name: Get jenkins slave package checksum file
+#  get_url:
+#    url:  "{{ jenkins_slave_checksum_file_url }}"
+#    dest: "{{ jenkins_slave_home }}"
+#
+#- name: Get checksum of jenkins slave package
+#  shell: >
+#      cat {{ jenkins_slave_home }}/{{ jenkins_slave_checksum_file }}
+#  register: chksum
 
 - name: Download jenkins slave package
   get_url:
     url:      "{{ jenkins_slave_jar_url }}"
     dest:     "{{ jenkins_slave_home }}/{{ jenkins_slave_jar }}"
-    checksum: "md5:{{ chksum.stdout }}"
+#    checksum: "md5:{{ chksum.stdout }}"
   notify: Restart jenkins slave
 
 - name: Create jenkins slave startup config file | Debian
