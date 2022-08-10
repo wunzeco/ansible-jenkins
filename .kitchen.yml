@@ -27,7 +27,7 @@ platforms:
       run_command: /sbin/init
       provision_command:
         - apt-get update
-        - apt-get install -y iproute git python-pip curl
+        - apt-get install -y iproute git curl
         - pip install ansible==2.4.3.0 pyhamcrest pyOpenSSL>=0.14
   - name: centos-7.2
     driver_config:
