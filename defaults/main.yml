@@ -69,7 +69,7 @@ jenkins_slave_home:    /home/{{ jenkins_slave_user }}
 
 jenkins_slave_version: 3.13
 jenkins_slave_jar:     "swarm-client-{{ jenkins_slave_version }}.jar"
-jenkins_slave_jar_url: "http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ jenkins_slave_version }}/{{ jenkins_slave_jar }}"
+jenkins_slave_jar_url: "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ jenkins_slave_version }}/{{ jenkins_slave_jar }}"
 jenkins_slave_checksum_file: "{{ jenkins_slave_jar }}.md5"
 jenkins_slave_checksum_file_url: "{{ jenkins_slave_jar_url }}.md5"
 
