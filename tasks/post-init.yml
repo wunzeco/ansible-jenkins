@@ -19,6 +19,7 @@
   with_items:
     - executors.groovy
     - set_slave_agent_port.groovy
+    - script_approval.groovy
   notify: Restart jenkins
 
 # Trigger any pending restart handlers now so that post-init scripts can run

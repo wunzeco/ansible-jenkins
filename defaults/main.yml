@@ -10,6 +10,8 @@ jenkins_admin_pass:
 jenkins_helper_scripts_dir:    "{{ jenkins_home }}/scripts"
 jenkins_post_init_scripts_dir: "{{ jenkins_home }}/init.groovy.d"
 
+jenkins_package_state: present
+
 ###########################
 ## Config - Jenkins Master
 ###########################
@@ -40,7 +42,7 @@ jenkins_handler_idle:            20
 ## Package & Plugins - Jenkins Master
 #####################################
 
-jenkins_version:  "2.121.3"             # version number e.g. 2.60.2
+jenkins_version:  "2.222.1"             # version number e.g. 2.60.2
 jenkins_apt_pkgs_extra: []
 jenkins_yum_pkgs_extra: []
 jenkins_pip_pkgs_extra: []
@@ -67,7 +69,7 @@ jenkins_slave_home:    /home/{{ jenkins_slave_user }}
 
 jenkins_slave_version: 3.13
 jenkins_slave_jar:     "swarm-client-{{ jenkins_slave_version }}.jar"
-jenkins_slave_jar_url: "http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ jenkins_slave_version }}/{{ jenkins_slave_jar }}"
+jenkins_slave_jar_url: "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/{{ jenkins_slave_version }}/{{ jenkins_slave_jar }}"
 jenkins_slave_checksum_file: "{{ jenkins_slave_jar }}.md5"
 jenkins_slave_checksum_file_url: "{{ jenkins_slave_jar_url }}.md5"
 

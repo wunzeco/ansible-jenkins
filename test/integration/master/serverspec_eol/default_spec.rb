@@ -1,4 +1,5 @@
-require 'spec_helper'
+require '/tmp/kitchen/spec/spec_helper.rb'
+
 
 jenkins_user        = 'jenkins'
 jenkins_group       = jenkins_user
@@ -7,8 +8,8 @@ jenkins_home_dir    = '/mnt/jenkins'
 jenkins_plugins_dir = "#{jenkins_home_dir}/plugins"
 jenkins_scripts_dir = "#{jenkins_home_dir}/scripts"
 
-jenkins_prereq_pkgs = %w( build-essential curl unzip git python-dev python-pip )
-jenkins_plugins = %w( 
+jenkins_prereq_pkgs = %w( build-essential curl unzip git python-dev )
+jenkins_plugins = %w(
     ansicolor authentication-tokens build-monitor-plugin build-name-setter
     build-pipeline-plugin claim copyartifact credentials credentials-binding
     dashboard-view delivery-pipeline-plugin plain-credentials workflow-step-api )
@@ -16,7 +17,7 @@ jenkins_plugins = %w(
 jenkins_startup_script_config  = '/etc/default/jenkins'
 if os[:family] =~ /centos|redhat/
   jenkins_startup_script_config  = '/etc/sysconfig/jenkins'
-  jenkins_prereq_pkgs = %w( curl unzip git python-devel python-pip )
+  jenkins_prereq_pkgs = %w( curl unzip git python-devel )
 end
 
 jenkins_prereq_pkgs.each do |pkg|

@@ -9,7 +9,7 @@
 - name: Install jenkins | Debian
   apt:
     deb:   "/var/tmp/{{ jenkins_deb_pkg }}"
-    state: present
+    state: "{{ jenkins_package_state }}"
   when: ansible_os_family|lower == 'debian'
   register: deb_install
 
@@ -22,7 +22,7 @@
 - name: Install jenkins | RedHat
   yum:
     name:   "/var/tmp/{{ jenkins_rpm_pkg }}"
-    state: present
+    state: "{{ jenkins_package_state }}"
   when: ansible_os_family|lower == 'redhat'
   register: rpm_install
 
@@ -62,6 +62,32 @@
     group: "{{ jenkins_group }}"
     mode:  0755
     state: directory
+
+- name: Find already installed plugins with *.jpi
+  find:
+    paths: "{{ jenkins_plugins_dir }}"
+    patterns: "*.jpi"
+  register: plugins_with_jpi
+
+- name: print the number of *jpi's
+  debug:
+    msg:
+      - "{{plugins_with_jpi.matched}}"
+
+- name: Rename *.jpi to *.hpi before updating the jenkins plugins
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ item.path | regex_replace('.jpi') }}.hpi"
+    remote_src: yes
+  with_items:
+    - "{{ plugins_with_jpi.files }}"
+
+- name: Rename *.jpi to *.hpi before updating the jenkins plugins
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ plugins_with_jpi.files }}"
 
 - name: Install jenkins plugins
   get_url:
@@ -105,3 +131,28 @@
 
 - name: UI users
   include_tasks: users.yml
+
+- name: Create NVD directory
+  file:
+    path: "{{ jenkins_home }}/nvd/"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    state: directory
+
+- name: Start NVD mirror container
+  docker_container:
+    image: "sspringett/nvdmirror"
+    name: "mirror"
+    keep_volumes: yes
+    recreate: no
+    log_driver: json-file
+    log_options:
+      max-size: "200M"
+      max-file: "1"
+    published_ports: "80:80"
+    volumes: "{{ jenkins_home }}/nvd/:/tmp/nvd/"
+    restart_policy: "on-failure"
+    restart_retries: 3
+    state: started
+  retries: 3
+  delay: 30

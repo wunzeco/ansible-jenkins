@@ -19,4 +19,3 @@ void create_or_update_user(String user_name, String email, String password="", S
 
   user.save()
 }
-

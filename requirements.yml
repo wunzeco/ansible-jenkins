@@ -1,1 +1,9 @@
-- src: wunzeco.java
+- src: git@github.com:o2-priority/ansible-java.git
+  version: master
+  scm: git
+  name: o2-priority.java
+
+- src: git@github.com:o2-priority/ansible-docker.git
+  version: jenkins-upgrade
+  scm: git
+  name: o2-priority.docker
